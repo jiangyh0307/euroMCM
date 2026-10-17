@@ -1,97 +1,133 @@
 # EuroMCM 2026 α — Our Turn
 
-## Current status: P0 research handoff, selectively verified
+## Overview
 
-The unified model, Parts I–IV Python implementation, figures and English draft
-are available. P0 reliability repairs use targeted convergence checks and
-stratified spot checks, **not full re-integration of the 4,400-run library**.
-Part V resource-protection R and new-installation cap C are implemented and
-executed on a 25-run reference grid plus a separate exploratory stress slice;
-fallible shutdown is specified but **not executed**.
-The acceptance record is [`docs/p0_acceptance.md`](docs/p0_acceptance.md).
+**Parts I–VI theory modeling is complete; the remaining work is paper integration and
+competition attachments.** The project asks:
 
-Current regression suite: **77 passed** (58 P0 + 11 Part V policy/shutdown + 8 risk). Machine-readable status, artifact hashes
-and verification limits: `results/tables/p0_handoff_manifest.json`.
+> Under what resource-allocation, physical and dynamical conditions can humanity
+> avoid extinction and marginalization alongside hypothetical recursive
+> self-improving AI?
 
-Question: under what resource-allocation, physical and dynamical conditions can
-humanity avoid extinction and marginalization alongside hypothetical RSI?
+Historical competition and future RSI scenarios use the **same weighted
+proportional-fair resource allocator**. Installed hardware and capability are
+separate states; construction energy, operations, manufacturing and facility land
+are accounted separately. Alignment is an operational human-resource floor, not a
+measure of AI intent.
 
-Authoritative problem: `../2026_Problem_Alpha.pdf`. The historical and future
-main models use the same weighted proportional-fair resource allocator. Alignment
-adds a human satisfaction floor. Installed hardware and capability are separate;
-construction energy, operations, manufacturing and facility footprint are accounted
-for separately. Proofs and units: [`docs/mathematical_model.md`](docs/mathematical_model.md).
+Authoritative problem: `../2026_Problem_Alpha.pdf` (verified in the current local
+workspace; adjust if the GitHub layout places it elsewhere).
 
-## Start here
+## Key Findings
 
-**Part V resource protection R and new-installation cap C are implemented and
-executed** on the reference grid and on legacy/risk-revised pressure slices. Read
-[`docs/part_v_mathematics.md`](docs/part_v_mathematics.md) for the English theory,
-[`docs/part_v_risk_results.md`](docs/part_v_risk_results.md) for the current
-risk-revised results, and [`docs/part_v_handoff_zh.md`](docs/part_v_handoff_zh.md)
-for the handoff. Fallible shutdown is implemented and executed as separate
-success/failure branches with assumed success probabilities. The population ODE is unchanged.
+1. **Collapse does not necessarily eliminate recoverability.** In the risk-revised
+   100-year pressure background, the tested policies have two different deadlines:
 
-1. [`docs/p0_acceptance.md`](docs/p0_acceptance.md): current findings, passed checks and limits.
-2. [`docs/results.md`](docs/results.md): actual numerical results and artifact paths.
-3. [`docs/population_protocol.md`](docs/population_protocol.md): population law, lower bound and Part V reference.
-4. [`docs/part_v_results.md`](docs/part_v_results.md): legacy Part V policy results (`H_ext=1e6`).
-5. [`docs/part_v_risk_results.md`](docs/part_v_risk_results.md): risk-revised Part V results.
-6. [`docs/part_vi_results.md`](docs/part_vi_results.md): Part VI robustness and conditional policy synthesis.
-7. [`docs/HANDOFF_zh.md`](docs/HANDOFF_zh.md): Chinese handoff.
-8. [`paper/draft_parts_i_iv.tex`](paper/draft_parts_i_iv.tex): current English Parts I–IV draft.
+   |Policy|Last sampled preventive start|Last sampled recovery start|Sampled window|
+   |---|---:|---:|---:|
+   |Resource protection R, `u=0.8`|42.75 yr|57.25 yr|14.5 yr|
+   |New-installation cap C, `C/A_max=0.1`|42.50 yr|65.75 yr|23.25 yr|
 
-The earlier v2 README/results/paper are retained under `docs/archive/` and
-`paper/archive/` as historical records, not current acceptance claims.
+   “Preventive” means never crossing `H_ext=10^8`; “recovery” allows an earlier
+   crossing but requires `H(T)>H_ext` at year 100. These are **last sampled
+   successes**, not exact continuous boundaries or general monotonicity theorems.
+   Part VI's coarser base scan gives 57.0/65.5 (windows 14.5/23.0); the small
+   difference is grid resolution, not a model change.
+2. **The window survives four pre-specified parameter checks.** Across base stress,
+   faster RSI, higher AI energy intensity and lower energy supply, preventive
+   deadlines were roughly **35–43 years**, recovery deadlines were later, and
+   sampled windows were about **14.5–15.5 years for R** and **23–25 years for C**.
+   Faster RSI / higher AI energy / lower supply move both deadlines earlier.
+3. **A first passage is not irreversible extinction.** A trajectory may cross below
+   `H_ext` and recover; this is recorded as `recovered_after_extinction=True` and
+   must not be called irreversible extinction. Population recovery also does not
+   mean social, institutional or welfare recovery.
+4. **The reference background is already non-marginal.** Its 25 policy runs stay
+   non-marginal and show no human-outcome benefit from R or C. A policy with a real
+   physical cost is not justified there. In the pressure background, early R/C avoid
+   the first crossing but generally remain marginal; late policies can cross and
+   recover.
+5. **Historical compatibility is a demonstration, not validation.** The stored
+   baseline gives about 2,867 years; 14/650 grid points are European-duration
+   compatible. H0 and H1 both have compatible points; the exercise does not identify
+   the historical mechanism.
 
-## Installation and reproducibility
+All numerical results are conditional scenario computations. No result is a
+real-world extinction probability, empirical RSI calibration or causal historical
+claim.
+
+## Model Architecture (Parts I–VI)
+
+|Part|Content|Main current file|
+|---|---|---|
+|I|Historical two-population competition, censoring, compatibility and non-identifiability|`src/alpha/historical.py`|
+|II|RSI population/hardware/capability dynamics, construction/manufacturing/site constraints|`src/alpha/rsi.py`|
+|III|Alignment floor, three-level outcomes, conditional population-floor certificate|`src/alpha/alignment.py`, `viability.py`|
+|IV|Exploratory UQ, sensitivity, structural robustness|`src/alpha/uncertainty.py`|
+|V|Resource protection R, installation cap C, shutdown branches, critical times|`src/alpha/rsi.py`, `risk.py`|
+|VI|Four-set robustness of the two critical times; conditional policy synthesis|`docs/part_vi_results.md`|
+
+The shared allocator is `src/alpha/allocation.py`. The population ODE is unchanged
+through Parts V–VI:
+`H_dot = H(beta_H s_H - delta_H)`. Risk adjudication is separate from the ODE.
+
+## Current Risk Definitions
+
+- `H_ext = 10^8`: effective-extinction first-passage floor.
+- `H_min = 2×10^8`: minimum acceptable population and rapid-collapse size floor.
+- Rapid collapse: 10-year loss ≥50% **and** `H(t+10)≤H_min`.
+- Cumulative collapse: `H(T)≤0.1 H0`.
+- Marginal/non-marginal: final-window adequacy, only if no catastrophe.
+- Precedence: extinction > rapid collapse > cumulative collapse > marginal > non-marginal.
+
+**Important coincidence:** in the risk-revised pressure background `H0=10^9`, the
+90% cumulative threshold equals `0.1 H0 = 10^8 = H_ext`. Cumulative collapse and
+effective extinction are therefore the same event in that set. They remain distinct
+definitions and can separate in other backgrounds.
+
+**Terminology:** `tau_recover*` is the latest sampled start that achieves
+`H(T)>H_ext` **within the specified 100-year horizon and tested policy class**.
+It is not a claim that recovery is impossible after that year under every policy.
+Likewise, `tau_prevent*` is a tested policy deadline, not a general theorem.
+
+Legacy results with `H_ext=10^6` are retained only for reproducibility and are not
+mixed with the current risk-revised results.
+
+## Reproducibility
 
 Tested with Python 3.9.6; Python 3.11+ recommended.
 
 ```bash
 python3 -m pip install -r requirements.txt
 export PYTHONPATH=src
+```
+
+**Quick validation (not the full experiment suite):**
+
+```bash
 python3 -m pytest -q tests
+```
+
+Current result: **77 passed** (58 P0 + 11 Part V policy/shutdown + 8 risk).
+
+**Full selected pipeline** (historical/RSI/alignment/UQ are not all rerun; the
+script runs the P0 acceptance checks plus Parts V–VI):
+
+```bash
 ./run_all.sh
 ```
 
-`run_all.sh` runs the **selective P0 checks**, not the full old Monte Carlo again:
-
-```bash
-python3 experiments/export_parameters.py
-python3 experiments/run_acceptance.py --section bounds
-python3 experiments/run_acceptance.py --section controlled
-python3 experiments/run_acceptance.py --section numerics
-python3 experiments/run_spotcheck.py
-python3 experiments/run_part_v.py
-python3 experiments/run_part_v_risk.py
-python3 experiments/run_part_v_ponr.py --step 1
-python3 experiments/run_part_v_ponr_refine.py
-python3 experiments/run_part_v_shutdown.py
-python3 experiments/run_part_v_uncertainty.py
-python3 experiments/run_part_vi_robustness.py
-python3 experiments/finalize_handoff.py
-```
-
-Legacy Part V also has a separate exploratory pressure slice (`H_ext=1e6`), not
-part of the current risk-revised comparison:
+`run_all.sh` includes `run_part_v.py`, `run_part_v_risk.py`, PONR scans,
+shutdown branches, the 8-vector uncertainty pilot and `run_part_vi_robustness.py`.
+It is not a quick command and can take several minutes. The legacy Part V stress
+slice is separate:
 
 ```bash
 python3 experiments/run_part_v_stress.py
 ```
 
-The controlled pilot uses 32 parameter vectors per broad exploratory range and five
-alignments (480 AI-present runs), plus 96 paired no-AI counterfactual runs; human
-demography, initial states, thresholds and resource supplies are fixed. In the
-aggressive range at a=0, AI lowers mean final H by 1.36%, lowers final satisfaction
-by 0.023 and increases final-window bad fraction by 0.098; 4/32 draws change from
-non-marginal to marginal. Minimum H remains H0 in this pilot and is uninformative.
-The numerical audit uses 26 targeted cases and four comparisons
-against a tighter adaptive reference. Spot checking adds 12 stratified random vectors
-at three alignments (36 checks). Seeds and tolerances are saved with outputs.
-
-Original figure commands remain available; they can overwrite earlier exploratory
-outputs and can take substantially longer:
+Original historical/RSI/alignment/UQ figure commands remain available but can
+overwrite exploratory outputs and take longer:
 
 ```bash
 python3 experiments/run_historical.py
@@ -100,109 +136,87 @@ python3 experiments/run_alignment.py
 python3 experiments/run_uq.py --n 100 --seed 2026 --dt 1.0
 ```
 
-RSI now defaults to adaptive DOP853 with extinction/adequacy threshold events,
-not the old projected one-year RK4 integration. Use `integrator="rk4"` explicitly
-only for comparisons. `dt_internal` controls RK4; `max_step`, `rtol`, `atol` control
-the adaptive integrator. The current classification equality tolerance is 1e-10.
+RSI defaults to adaptive DOP853 with extinction/adequacy threshold events.
+`integrator="rk4"` is retained only for comparisons. The current classification
+equality tolerance is `1e-10`.
 
-## What the new checks found
+## Results and Data
 
-- A common-weight unit scaling bug in capped water filling was fixed. Multiplying
-  all weights by 1e-80 through 1e80 now preserves the allocation in the regression fixture.
-- Adaptive refinement passed **26/26 targeted cases**. The old RK4 saved trajectories
-  passed the configured error tests in only 5/26 cases at one-year steps, 8/26 at
-  half-year steps and 23/26 at quarter-year steps. All 104 comparisons retained their
-  outcome class, but this is not enough to certify all old trajectories.
-- Stratified spot checks: **36/36 completed, no legacy outcome-class changes**,
-  no projection and no material physical-constraint violations.
-- The stored 400 parameter vectors were checked individually against their own
-  demographic extinction bound: no contradictions. The bound rules out extinction
-  by year 100 for 45/100 conservative and 33/100 central vectors, not all of them.
-- In the strictly controlled RSI-only pilot, no extinction occurred. Conservative
-  and central ranges were non-marginal for all pilot draws; aggressive non-marginal
-  frequencies were 28/32 at a=0,0.4,0.6; 31/32 at a=0.8; 32/32 at a=1.
-  These are conditional pilot frequencies, not reality probabilities.
-- Population law and Part V reference settings: [`docs/population_protocol.md`](docs/population_protocol.md).
+|Topic|Current result|Location|
+|---|---|---|
+|Historical baseline|`T_rep≈2867 yr`; 14/650 European-compatible|`results/figures/fig1...`, `fig2...`; `docs/results.md`|
+|RSI scenarios|low/moderate non-marginal; rapid/stress marginal or extinct|`results/figures/fig3...`, `fig4...`; `docs/results.md`|
+|Risk-revised Part V|reference all non-marginal; pressure extinction at 43 yr; recovery cases|`docs/part_v_risk_results.md`; `part_v_risk_*`|
+|Critical times|R 42.75/57.25; C 42.50/65.75 in base pressure|`part_v_ponr_summary.csv`; `part_v_ponr_*`|
+|Shutdown|success/failure branch grid, assumed `p_s`|`part_v_shutdown_*`|
+|Small UQ pilot|8 RSI vectors, 7 policies|`part_v_uncertainty_*`|
+|Part VI robustness|four sets; windows R 14.5–15.5, C 23–25|`docs/part_vi_results.md`; `part_vi_windows.png/pdf`|
+|Physical cost proxies|blocked installation, displaced AI energy, construction MWh|`part_v_risk_*`, `part_v_shutdown_*`|
 
-## Part V policy experiments
+There is **no monetary-cost result** and **no global optimal-control solution**.
+The cost columns are physical proxies only.
 
-Implemented and executed: resource-protection R and new-installation cap C, using
-the same allocator and population law. The reference 25-run grid (1 no policy +
-12 R + 12 C) is entirely non-marginal and shows no human-outcome improvement from
-the tested policies; R can displace AI operations at a land bottleneck with only
-a tiny human adequacy gain. A separate exploratory joint-stress slice shows that
-early R/C can prevent extinction while many paths remain marginal, and that the
-response is non-monotone in strength and timing. No global optimal policy is claimed.
+## Assumptions and Limitations
 
-Legacy results with `H_ext=1e6` remain in [`docs/part_v_results.md`](docs/part_v_results.md).
-The current risk-revised results use `H_ext=1e8`, `H_min=2e8`, rapid collapse
-(10-year 50% loss with a size floor), cumulative 90% loss, and explicit
-first-passage/recovery flags. They are in
-[`docs/part_v_risk_results.md`](docs/part_v_risk_results.md). In the revised stress
-background (`H0=1e9`), no intervention reaches effective extinction at 43 years;
-early R/C avoid it but remain marginal, and four late-policy cases cross then recover.
-Point-of-no-return scan (R u=0.8, C/A_max=0.1): sampled preventive deadlines
-about 42.75 and 42.50 years; recovery deadlines about 57.25 and 65.75 years,
-giving sampled windows of about 14.5 and 23.25 years. These are finite-grid
-policy results, not general monotonicity or irreversible-extinction theorems.
+- Historical compatibility is not causal validation; parameter provenance is in
+  `src/alpha/parameters.py` and `results/tables/parameter_table.csv`.
+- Selected historical population energy means (2700/2500 kcal/person/day) are
+  ASSUMPTION, not measured all-age means.
+- All RSI technology, energy, land, manufacturing and capability laws are scenario
+  assumptions. Hardware units are not empirically calibrated.
+- Power supply is exogenous; the human-free counterfactual does not prove autonomous
+  power-plant operation.
+- Facility land is a fixed precommitted partition. Shutdown reduces operating
+  availability but does not release installed stock or site land.
+- Risk thresholds and critical times are policy conventions. Sensitivity to
+  `H_ext,H_min,Delta,q,q_total` is still required before final paper claims.
+- Numerical verification is selective: 26 targeted cases, 36 stratified checks and
+  an interrupted full-library recheck. Some old coarse RK4 trajectories fail current
+  precision checks; old results are retained as exploratory.
+- No real-world probability, irreversible-extinction theorem, unique optimal policy
+  or value-of-information result is claimed.
 
-Fallible shutdown is now implemented and executed as separate success/failure
-branches with assumed success probabilities. A small 8-vector RSI uncertainty
-ensemble is also executed. Part VI repeats the two-deadline scan on four
-pre-specified parameter sets: preventive deadlines are roughly 35–43 years,
-recovery deadlines are later, with R windows about 14.5–15.5 years and C windows
-about 23–25 years. See [`docs/part_vi_results.md`](docs/part_vi_results.md).
-Monetary cost conversion and global optimal control remain **NOT EXECUTED**.
-No real-world probability is claimed.
+## Team Handoff
 
-## Earlier results and provenance
+**Frozen model and definitions (read first):**
+`docs/mathematical_model.md`, `docs/population_protocol.md`,
+`docs/part_v_mathematics.md`.
 
-The stored historical demonstration gives approximately 2,867 years, and 14/650
-grid points are European-duration compatible; this is a scenario slice, not causal
-validation or full empirical calibration. H0/H1 are not identified by it.
+**Current results (use these in the paper):**
+`docs/part_v_risk_results.md`, `docs/part_vi_results.md`, `docs/results.md`,
+`docs/p0_acceptance.md`.
 
-Old broad aggressive sampling gave 2/100 extinction outcomes at a=0; the later
-outcome-informed narrow range gave 42/100. **All ranges are exploratory, none was
-preregistered.** Changing labels cannot turn an exploratory result into confirmation.
-The old UQ also changes human demography, initial population and supply, and must not
-be described as measuring the isolated effect of RSI.
+**Legacy/archived (do not mix with current claims):**
+`docs/part_v_results.md` (`H_ext=1e6`), `docs/archive/`, `paper/archive/`.
 
-Parameter records: `src/alpha/parameters.py`, `results/tables/parameter_table.csv`.
-Historical selected population energy means 2700/2500 kcal/day are **ASSUMPTION**,
-because no age/sex aggregation was supplied. Problem-reported adult ranges and
-differences are SOURCE (as reported by the problem). Future technology values are
-scenario assumptions. IEA data-centre totals do not directly measure RSI demand.
-Read [`docs/assumptions.md`](docs/assumptions.md) and [`docs/limitations.md`](docs/limitations.md).
+**Next priorities:**
+1. Check the core mathematical conclusions and explain the mechanisms behind
+   the longer C recovery window and the potential welfare cost of strong R.
+2. Integrate Parts I–VI into the final paper, with consistent risk definitions.
+3. Verify references, compile the LaTeX draft, and prepare the Summary Sheet,
+   ENOCH Letter and AI-use report.
 
-## Project organization
+Optional extensions (not required for the current theory): full Part V uncertainty
+distribution, monetary-cost calibration, global optimal control, spatial migration,
+idle-hardware states and a continuous viability kernel.
+
+## Project Organization
 
 |Location|Purpose|
 |---|---|
-|`src/alpha/allocation.py`|Shared allocator, bounds and boundary cases|
-|`src/alpha/historical.py`|Historical dynamics and censoring|
-|`src/alpha/rsi.py`|Hardware/capability/human dynamics and resource accounting|
+|`src/alpha/allocation.py`|Shared allocator and boundary cases|
+|`src/alpha/historical.py`|Historical competition and censoring|
+|`src/alpha/rsi.py`|RSI/hardware/human dynamics and policies|
+|`src/alpha/risk.py`|Risk-revised outcome hierarchy and paired damage|
 |`src/alpha/alignment.py`, `viability.py`|Safety maps and conditional certificate|
-|`src/alpha/uncertainty.py`, `scenarios.py`|Exploratory sampling and uncertainty|
-|`configs/p0_acceptance.yaml`|Repair protocol, controlled design and tolerances|
-|`experiments/`|Runnable experiments and selective verification|
-|`results/figures/`, `results/tables/`|Generated artifacts; current audits use `p0_` prefix|
-|`tests/`|Mathematical, physical and numerical regressions|
-|`docs/`, `paper/`|Current derivations, results, English draft and archives|
+|`src/alpha/uncertainty.py`, `scenarios.py`|Exploratory sampling and scenario backgrounds|
+|`configs/`|P0 acceptance, risk Part V and Part VI robustness settings|
+|`experiments/`|Runnable experiments and verification|
+|`results/figures/`, `results/tables/`|Current figures and tables|
+|`tests/`|Mathematical, physical, policy and risk regressions|
+|`docs/`, `paper/`|Current derivations, results, handoff and archives|
 
-## Handoff and remaining work
-
-P0 delivers a runnable exploratory research model and a documented selective
-verification record. It does not deliver a global numerical certificate. Recheck
-specific policy or threshold conclusions at finer tolerances before adopting them.
-Fixed-policy safe grids are not a control viability kernel; population-floor
-certificates do not guarantee non-marginal welfare.
-
-P1: original literature/data calibration, spatial migration, better industrial/power
-and idle-hardware models, Part V uncertainty/fallible-shutdown extensions, robust
-control and value of information. The minimal Part V R/C comparison is already executed. P2: final paper, Summary Sheet, ENOCH letter,
-verified references, AI-use report and typesetting. LaTeX compilation is **NOT
-EXECUTED** (no engine installed); compile from `paper/` when an engine is available.
-
-The full-library adaptive verification was interrupted and is **INCOMPLETE**. Per
-the user's scope decision, it is not required for this selective P0 handoff. Its
-script is checkpointed and defaults to a short batch; it is not run by `run_all.sh`.
+LaTeX compilation is **NOT EXECUTED** (no engine installed). Compile from `paper/`
+when an engine is available. The full-library adaptive verification remains
+incomplete by the agreed selective-verification scope; this is a documented limit,
+not a passed check.
