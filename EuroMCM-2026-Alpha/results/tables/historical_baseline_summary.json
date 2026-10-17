@@ -1,0 +1,19 @@
+{
+  "T_rep": 2867.4632593599167,
+  "censored": false,
+  "N_crit": 500.0,
+  "baseline_scan_row": [
+    {
+      "w_ratio": 1.0,
+      "beta_ratio": 1.0,
+      "T_rep": 2869.0962296538437,
+      "censored": false,
+      "status": "reached_threshold",
+      "min_N": 499.99999999999983,
+      "max_M": 102786.79463697983,
+      "compatible_EU": true,
+      "compatible_regional": true,
+      "error": ""
+    }
+  ]
+}

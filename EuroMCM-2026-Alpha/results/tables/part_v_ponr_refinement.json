@@ -1,0 +1,103 @@
+{
+  "R_u0.8": {
+    "prevent": {
+      "range": [
+        40.0,
+        44.0
+      ],
+      "success_taus": [
+        40.0,
+        40.25,
+        40.5,
+        40.75,
+        41.0,
+        41.25,
+        41.5,
+        41.75,
+        42.0,
+        42.25,
+        42.5,
+        42.75
+      ],
+      "last_success": 42.75,
+      "first_failure": 43.0,
+      "resolution": 0.25,
+      "monotone_on_range": true
+    },
+    "recover": {
+      "range": [
+        55.0,
+        59.0
+      ],
+      "success_taus": [
+        55.0,
+        55.25,
+        55.5,
+        55.75,
+        56.0,
+        56.25,
+        56.5,
+        56.75,
+        57.0,
+        57.25
+      ],
+      "last_success": 57.25,
+      "first_failure": 57.5,
+      "resolution": 0.25,
+      "monotone_on_range": true
+    }
+  },
+  "C_c0.1": {
+    "prevent": {
+      "range": [
+        40.0,
+        44.0
+      ],
+      "success_taus": [
+        40.0,
+        40.25,
+        40.5,
+        40.75,
+        41.0,
+        41.25,
+        41.5,
+        41.75,
+        42.0,
+        42.25,
+        42.5
+      ],
+      "last_success": 42.5,
+      "first_failure": 42.75,
+      "resolution": 0.25,
+      "monotone_on_range": true
+    },
+    "recover": {
+      "range": [
+        62.0,
+        66.0
+      ],
+      "success_taus": [
+        62.0,
+        62.25,
+        62.5,
+        62.75,
+        63.0,
+        63.25,
+        63.5,
+        63.75,
+        64.0,
+        64.25,
+        64.5,
+        64.75,
+        65.0,
+        65.25,
+        65.5,
+        65.75
+      ],
+      "last_success": 65.75,
+      "first_failure": 66.0,
+      "resolution": 0.25,
+      "monotone_on_range": true
+    }
+  }
+}

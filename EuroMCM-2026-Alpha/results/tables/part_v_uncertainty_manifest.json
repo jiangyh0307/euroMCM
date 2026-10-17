@@ -1,0 +1,26 @@
+{
+  "background": "scenario_collapse_stress fixed demographics/resources/thresholds",
+  "varied_parameters": [
+    "eta",
+    "xi",
+    "omega",
+    "q_c",
+    "M_max",
+    "c_A",
+    "w_A0",
+    "e0"
+  ],
+  "source_range": "stress_augmented (exploratory, not preregistered)",
+  "n": 8,
+  "seed": 2027,
+  "policies": [
+    "none",
+    "R_tau0_u0.8",
+    "R_tau25_u0.8",
+    "R_tau50_u0.8",
+    "C_tau0_c0.1",
+    "C_tau25_c0.1",
+    "C_tau50_c0.1"
+  ],
+  "note": "Small exploratory ensemble; not a real-world probability."
+}

@@ -1,0 +1,7 @@
+a,n_pairs,n_population_floor,n_non_marginal,robust_population_floor,robust_non_marginal
+0.0,80,78,0,False,False
+0.2,80,80,0,True,False
+0.4,80,80,0,True,False
+0.6,80,80,0,True,False
+0.8,80,80,2,True,False
+1.0,80,80,4,True,False

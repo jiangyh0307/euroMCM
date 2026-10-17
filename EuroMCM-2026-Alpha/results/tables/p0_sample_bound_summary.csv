@@ -1,0 +1,5 @@
+scenario,samples,analytically_excluded,contradictions
+aggressive,100,0,0
+central,100,33,0
+conservative,100,45,0
+stress_augmented,100,0,0

@@ -1,0 +1,32 @@
+# Risk-revised Part V adjudication. All thresholds are scenario conventions.
+risk:
+  H_ext: 100000000.0          # absolute effective-extinction floor
+  H_min: 200000000.0          # minimum acceptable population / rapid-collapse size floor
+  delta_years: 10.0     # rapid-loss window
+  q_rapid: 0.5          # 50% loss in delta_years
+  q_total: 0.9          # 90% cumulative loss relative to H0
+  W_window: 10.0        # final adequacy window
+  s_min: 0.8
+  p_tol: 0.0
+reference_background:
+  H0: 8000000000.0
+  beta_H: 0.02
+  delta_H: 0.01
+  H_ext: 100000000.0
+  H_min: 200000000.0
+stress_background:
+  H0: 1000000000.0
+  beta_H: 0.20
+  delta_H: 0.12
+  H_ext: 100000000.0
+  H_min: 200000000.0
+  note: "New Part V pressure background; legacy scenario_stress with H0=1e8 is not interchangeable."
+policy_grid:
+  tau_years: [0.0, 25.0, 50.0, 75.0]
+  R_u_bar: [0.5, 0.8, 1.0]
+  C_fraction_of_Amax: [0.1, 0.5, 1.0]
+  tau_cap: "tau_build"
+outputs:
+  main: results/tables/part_v_risk_main_experiments.csv
+  stress: results/tables/part_v_risk_stress_experiments.csv
+  manifest: results/tables/part_v_risk_manifest.json

@@ -1,0 +1,41 @@
+{
+  "background": "scenario_collapse_stress",
+  "thresholds": {
+    "H_ext": 100000000.0,
+    "H_min": 200000000.0,
+    "delta_years": 10.0,
+    "q_rapid": 0.5,
+    "q_total": 0.9,
+    "W_window": 10.0,
+    "s_min": 0.8,
+    "p_tol": 0.0
+  },
+  "taus": [
+    0.0,
+    25.0,
+    50.0,
+    75.0
+  ],
+  "shutdown_fractions": [
+    0.5,
+    1.0
+  ],
+  "p_success_assumed": [
+    0.5,
+    0.9
+  ],
+  "failure_branch": {
+    "risk_outcome": "extinction",
+    "extinction": true,
+    "terminal_extinction": true,
+    "recovered_after_extinction": false,
+    "rapid_collapse": true,
+    "cumulative_collapse": true,
+    "extinction_time": 43.0,
+    "final_H": 117003.15782514191,
+    "min_H": 117003.15782514191,
+    "final_s_H": 0.009947367821163186,
+    "final_window_bad_fraction": 1.0
+  },
+  "note": "Branch mixture is exact conditional on Z; p_success is assumed, not calibrated. No monetary cost."
+}

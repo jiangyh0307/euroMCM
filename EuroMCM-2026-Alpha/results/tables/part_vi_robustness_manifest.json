@@ -1,0 +1,55 @@
+{
+  "pre_specified": true,
+  "sets": {
+    "base_stress": {
+      "description": "reference pressure background",
+      "overrides": {}
+    },
+    "fast_rsi": {
+      "description": "faster capability growth",
+      "overrides": {
+        "eta": 1.0
+      }
+    },
+    "energy_intensive_ai": {
+      "description": "higher AI operational energy intensity",
+      "overrides": {
+        "e0": 20000.0
+      }
+    },
+    "low_energy_supply": {
+      "description": "lower total energy supply",
+      "overrides": {
+        "E_total": 8000000000.0
+      }
+    }
+  },
+  "policies": {
+    "R": {
+      "kind": "protect",
+      "u_bar": 0.8
+    },
+    "C": {
+      "kind": "cap",
+      "cap_fraction": 0.1,
+      "tau_cap": "build"
+    }
+  },
+  "thresholds": {
+    "H_ext": 100000000.0,
+    "H_min": 200000000.0,
+    "delta_years": 10.0,
+    "q_rapid": 0.5,
+    "q_total": 0.9,
+    "W_window": 10.0,
+    "s_min": 0.8,
+    "p_tol": 0.0
+  },
+  "scan": {
+    "tau_min": 0.0,
+    "tau_max": 75.0,
+    "coarse_step": 2.0,
+    "refine_step": 0.5
+  },
+  "note": "Boundary values are sampled-grid statements; no general monotonicity or irreversibility claim."
+}

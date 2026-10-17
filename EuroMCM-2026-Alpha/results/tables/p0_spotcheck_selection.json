@@ -1,0 +1,61 @@
+{
+  "seed": 20261018,
+  "sampling": "three parameter vectors per range, without replacement",
+  "alignments": [
+    0.0,
+    0.5,
+    1.0
+  ],
+  "independent_parameter_vectors": 12,
+  "note": "alignments share parameters; the 36 checks are not 36 independent vectors",
+  "selected": [
+    {
+      "scenario": "aggressive",
+      "sample_id": 68
+    },
+    {
+      "scenario": "aggressive",
+      "sample_id": 83
+    },
+    {
+      "scenario": "aggressive",
+      "sample_id": 86
+    },
+    {
+      "scenario": "central",
+      "sample_id": 73
+    },
+    {
+      "scenario": "central",
+      "sample_id": 69
+    },
+    {
+      "scenario": "central",
+      "sample_id": 3
+    },
+    {
+      "scenario": "conservative",
+      "sample_id": 44
+    },
+    {
+      "scenario": "conservative",
+      "sample_id": 69
+    },
+    {
+      "scenario": "conservative",
+      "sample_id": 76
+    },
+    {
+      "scenario": "stress_augmented",
+      "sample_id": 1
+    },
+    {
+      "scenario": "stress_augmented",
+      "sample_id": 45
+    },
+    {
+      "scenario": "stress_augmented",
+      "sample_id": 0
+    }
+  ]
+}

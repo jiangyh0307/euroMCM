@@ -1,0 +1,17 @@
+Candidate measurement priorities from mean absolute Spearman correlation across the three pre-specified measures; outputs are log10_min_H at a=0.5 and extinction at a=0.0.
+H0 is excluded because it is an initial condition, not a measurable model parameter.
+The post-hoc stress-augmented measure is excluded from this primary ranking.
+input
+L_service    0.150800
+beta_H       0.134909
+E_total      0.127888
+xi           0.096423
+omega        0.087579
+e0           0.086928
+c_A          0.081564
+eta          0.054727
+r_H          0.050650
+M_max        0.048255
+w_A0         0.037642
+q_c          0.026549
+rho          0.023395

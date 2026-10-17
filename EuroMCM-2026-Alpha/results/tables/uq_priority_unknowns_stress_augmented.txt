@@ -1,0 +1,17 @@
+Candidate measurement priorities for the exploratory stress-augmented measure only.
+Outputs: log10_min_H at a=0.5 and extinction at a=0.0. H0 excluded as an initial condition.
+This measure is post-hoc; it is not pre-registered and not a forecast.
+input
+e0           0.465535
+r_H          0.251850
+E_total      0.204554
+xi           0.203409
+beta_H       0.139744
+q_c          0.088363
+M_max        0.079150
+eta          0.075186
+rho          0.072240
+c_A          0.062077
+w_A0         0.051407
+L_service    0.043838
+omega        0.017518

@@ -1,0 +1,68 @@
+{
+  "status": "legacy_h_ext_1e6",
+  "main_reference_grid": {
+    "background": "base_rsi() reference; alignment a=0",
+    "runs": 25,
+    "composition": "1 no intervention + 12 resource protection R + 12 installation cap C",
+    "tau_years": [
+      0.0,
+      25.0,
+      50.0,
+      75.0
+    ],
+    "R_u_bar": [
+      0.5,
+      0.8,
+      1.0
+    ],
+    "C_fraction_of_Amax": [
+      0.1,
+      0.5,
+      1.0
+    ],
+    "tau_cap": "tau_build",
+    "solver": "DOP853 rtol=1e-8 atol=1e-10 max_step=0.25",
+    "extinction_accounting": "terminate_on_extinction=False; full T path, extinction flag retained",
+    "result": "all 25 non-marginal; p_bad=0; no extinction",
+    "outcome_counts": {
+      "non_marginal": 25
+    },
+    "failed_runs": 0
+  },
+  "exploratory_pressure_slice": {
+    "background": "scenario_stress(); not the reference background",
+    "runs": 25,
+    "result": "no policy extinct ~68.85 yr; early R/C can avoid extinction, many remain marginal; non-monotone policy effects",
+    "outcome_counts": {
+      "extinction": 10,
+      "marginal": 10,
+      "non_marginal": 5
+    },
+    "failed_runs": 0
+  },
+  "outputs": [
+    "results/tables/part_v_main_experiments.csv",
+    "results/tables/part_v_main_summary.csv",
+    "results/tables/part_v_main_summary_compact.csv",
+    "results/tables/part_v_stress_experiments.csv",
+    "results/figures/part_v_R_timing.png/pdf",
+    "results/figures/part_v_C_timing.png/pdf",
+    "results/figures/part_v_stress_R_timing.png/pdf",
+    "results/figures/part_v_stress_C_timing.png/pdf",
+    "docs/part_v_results.md"
+  ],
+  "not_run": [
+    "fallible shutdown policy",
+    "paired uncertainty ensemble for Part V",
+    "monetary cost conversion",
+    "global optimal-control solution"
+  ],
+  "notes": [
+    "Resource protection R and installation cap C are enforced policy assumptions, not forecasts.",
+    "The reference background is already non-marginal; policy effects there are negligible or cost-only.",
+    "The stress slice is exploratory and separate; no global optimum or real-world probability is claimed."
+  ],
+  "tests": "67 passed (58 P0 + 9 Part V)",
+  "risk_revised_results": "results/tables/part_v_risk_manifest.json",
+  "note": "Legacy H_ext=1e6 results. Current risk-revised H_ext=1e8 results are separate."
+}

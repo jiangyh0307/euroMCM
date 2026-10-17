@@ -1,0 +1,14 @@
+{
+  "n_total": 650,
+  "n_valid": 650,
+  "n_errors": 0,
+  "n_crossed": 325,
+  "n_censored": 325,
+  "n_compatible_EU": 14,
+  "fraction_compatible_EU": 0.021538461538461538,
+  "n_compatible_regional": 30,
+  "fraction_compatible_regional": 0.046153846153846156,
+  "crossed_time_min": 260.27604249228716,
+  "crossed_time_median": 525.6376063061343,
+  "crossed_time_max": 9538.865921406443
+}

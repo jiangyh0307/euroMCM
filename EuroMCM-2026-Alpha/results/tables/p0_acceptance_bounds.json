@@ -1,0 +1,96 @@
+{
+  "protocol": {
+    "status": "exploratory_repair_protocol_not_preregistered",
+    "seed": 20261017,
+    "n_per_range": 32,
+    "alignment_grid": [
+      0.0,
+      0.4,
+      0.6,
+      0.8,
+      1.0
+    ],
+    "ranges": [
+      "conservative",
+      "central",
+      "aggressive"
+    ],
+    "varied_parameters": [
+      "eta",
+      "xi",
+      "omega",
+      "q_c",
+      "M_max",
+      "c_A",
+      "w_A0",
+      "e0"
+    ],
+    "fixed_parameters": {
+      "beta_H": 0.02,
+      "delta_H": 0.01,
+      "H0": 8000000000.0,
+      "H_ref": 8000000000.0,
+      "H_ext": 1000000.0,
+      "H_min": 100000000.0,
+      "s_min": 0.8,
+      "E_total": 30000000000.0,
+      "L_service": 2000000.0,
+      "L_site": 100.0,
+      "rho": 0.1,
+      "T": 100.0,
+      "W_window": 10.0
+    },
+    "dt": 0.5,
+    "paired_no_ai_counterfactual": {
+      "A0": 0.0,
+      "rho": 0.0,
+      "alignment_for_reference": 0.0,
+      "same_human_parameters": true,
+      "same_energy_and_land_service": true,
+      "keep_site_land_precommitted": true,
+      "note": "No construction energy reservation; facility site is not reassigned to human service."
+    },
+    "paired_effect_metrics": [
+      "relative_final_H_difference",
+      "final_s_H_difference",
+      "final_window_p_bad_difference",
+      "outcome_class_change"
+    ],
+    "comparison": {
+      "relative_H_error": 0.002,
+      "capacity_normalized_A_error": 0.002,
+      "relative_q_error": 0.002,
+      "event_time_error_years": 0.1,
+      "bad_fraction_error": 0.075,
+      "adaptive_refinement_error": 0.0001,
+      "adequacy_comparison_tolerance": 1e-10
+    }
+  },
+  "status": "targeted_validation_not_global_certificate",
+  "sample_bounds": [
+    {
+      "scenario": "aggressive",
+      "samples": 100,
+      "analytically_excluded": 0,
+      "contradictions": 0
+    },
+    {
+      "scenario": "central",
+      "samples": 100,
+      "analytically_excluded": 33,
+      "contradictions": 0
+    },
+    {
+      "scenario": "conservative",
+      "samples": 100,
+      "analytically_excluded": 45,
+      "contradictions": 0
+    },
+    {
+      "scenario": "stress_augmented",
+      "samples": 100,
+      "analytically_excluded": 0,
+      "contradictions": 0
+    }
+  ]
+}

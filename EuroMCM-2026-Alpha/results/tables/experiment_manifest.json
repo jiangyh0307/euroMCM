@@ -1,0 +1,117 @@
+{
+  "archive_notice": "Legacy v2 manifest. Superseded by p0_handoff_manifest.json; pre_specified keys below do not establish preregistration and old test counts are historical.",
+  "project": "EuroMCM 2026 Problem Alpha, Parts I-IV reliability-revised first executable version",
+  "date": "2026-10-17",
+  "python": "3.9.6",
+  "test_command": "python3 -m pytest -q tests",
+  "test_result": "41 passed",
+  "experiments": [
+    {
+      "name": "historical",
+      "command": "PYTHONPATH=src python3 experiments/run_historical.py",
+      "key_settings": {
+        "baseline": "HistoricalParameters defaults",
+        "compatibility_grid": "26 w values x 25 beta values, including w_ratio=1 and beta_ratio=1",
+        "w_ratio_range": [0.2, 2.0],
+        "beta_ratio_range": [0.5, 1.5],
+        "european_band_years": [2600, 5400],
+        "regional_band_years": [1400, 2900]
+      },
+      "outputs": [
+        "results/figures/fig1_historical_trajectories.png/pdf",
+        "results/figures/fig2_historical_compatibility.png/pdf",
+        "results/figures/figS_historical_sensitivity.png/pdf",
+        "results/tables/historical_compatibility_scan.csv",
+        "results/tables/historical_compatibility_summary.json",
+        "results/tables/historical_sensitivity.csv",
+        "results/tables/historical_baseline_trajectory.csv",
+        "results/tables/historical_baseline_summary.json"
+      ]
+    },
+    {
+      "name": "rsi",
+      "command": "PYTHONPATH=src python3 experiments/run_rsi.py",
+      "key_settings": {
+        "scenarios": ["low", "moderate", "rapid", "stress"],
+        "alignment_values": [0.0, 0.5, 1.0],
+        "integrator": "fixed-step RK4, dt_internal=1.0",
+        "controlled_factorial": "baseline/fast human demography x baseline/stress AI"
+      },
+      "outputs": [
+        "results/figures/fig3_rsi_scenarios.png/pdf",
+        "results/figures/fig4_rsi_resources.png/pdf",
+        "results/figures/figS_controlled_stress.png/pdf",
+        "results/tables/rsi_scenario_summary.csv",
+        "results/tables/rsi_human_free_counterfactual.csv",
+        "results/tables/rsi_efficiency_expansion_diagnostic.csv",
+        "results/tables/controlled_stress_factorial.csv"
+      ]
+    },
+    {
+      "name": "alignment",
+      "command": "PYTHONPATH=src python3 experiments/run_alignment.py",
+      "key_settings": {
+        "scenario": "stress",
+        "alignment_grid": "0 to 1 in 0.1 steps",
+        "eta_grid": [0.02, 0.05, 0.1, 0.2, 0.5, 1.0],
+        "safe_state_grid": "7 A0 values x 7 q0 values at a=0,0.2,0.4",
+        "horizon_values": [50, 100, 150]
+      },
+      "outputs": [
+        "results/figures/fig5_alignment_phase.png/pdf",
+        "results/figures/figS_safe_initial_states.png/pdf",
+        "results/figures/figS_alignment_horizon.png/pdf",
+        "results/tables/alignment_phase_diagram.csv",
+        "results/tables/alignment_scan.csv",
+        "results/tables/alignment_summary.txt",
+        "results/tables/alignment_safe_initial_states.csv",
+        "results/tables/alignment_horizon_sensitivity.csv"
+      ]
+    },
+    {
+      "name": "uq",
+      "command": "PYTHONPATH=src python3 experiments/run_uq.py --n 100 --seed 2026 --dt 1.0",
+      "key_settings": {
+        "n_per_measure": 100,
+        "seed": 2026,
+        "dt_internal": 1.0,
+        "pre_specified_measures": ["conservative", "central", "aggressive"],
+        "exploratory_post_hoc_measure": "stress_augmented",
+        "alignment_grid": "0 to 1 in 0.1 steps",
+        "structural_robustness": "20 samples x 4 structures x 6 alignments, run separately for aggressive and stress_augmented"
+      },
+      "outputs": [
+        "results/figures/fig6_uq_probabilities.png/pdf",
+        "results/figures/figS_uq_sensitivity.png/pdf",
+        "results/figures/figS_uq_stress_augmented.png/pdf",
+        "results/figures/figS_structural_robustness.png/pdf",
+        "results/figures/figS_structural_robustness_stress_augmented.png/pdf",
+        "results/tables/uq_probabilities.csv",
+        "results/tables/uq_probabilities_stress_augmented.csv",
+        "results/tables/uq_sensitivity.csv",
+        "results/tables/uq_priority_unknowns.txt",
+        "results/tables/uq_priority_unknowns_stress_augmented.txt",
+        "results/tables/uq_summary.json",
+        "results/tables/structural_robustness_summary.csv",
+        "results/tables/structural_robustness_summary_stress_augmented.csv",
+        "results/tables/structural_robustness_detail.csv",
+        "results/tables/structural_robustness_detail_stress_augmented.csv",
+        "results/tables/uq_samples.csv",
+        "results/tables/uq_results.csv"
+      ]
+    }
+  ],
+  "reliability_revision": [
+    "Fixed the tiny-positive-population allocator defect with a robust single-resource relaxation and regression tests.",
+    "The previously observed adaptive-integrator chatter was partly caused by that defect; solve_ivp now completes and agrees with RK4 on a regression test.",
+    "Restored the original broad pre-specified aggressive measure and separated the post-hoc stress_augmented measure.",
+    "Added a controlled 2x2 human-demography x AI-pressure factorial.",
+    "Alignment figures now use actual grid coordinates via pcolormesh."
+  ],
+  "notes": [
+    "All numerical results are conditional on scenario assumptions, not empirical calibration.",
+    "stress_augmented is post-hoc exploratory and must not be presented as pre-registered or as a forecast.",
+    "The LaTeX draft was not compiled because no LaTeX engine is installed in this environment.",
+    "Generated figures and tables are handoff artifacts; do not edit them by hand."
+  ]
+}

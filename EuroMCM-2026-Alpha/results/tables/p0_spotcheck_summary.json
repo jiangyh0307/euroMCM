@@ -1,0 +1,9 @@
+{
+  "simulations": 36,
+  "parameter_vectors": 12,
+  "failed": 0,
+  "legacy_classification_changes": 0,
+  "all_library_verified": false,
+  "status": "stratified_spot_check_only",
+  "expansion_rule": "Any classification change or failure requires focused follow-up."
+}

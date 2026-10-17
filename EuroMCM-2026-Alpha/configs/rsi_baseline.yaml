@@ -1,0 +1,52 @@
+# RSI scenario assumptions. None of these values is a measured RSI parameter.
+# The executable definitions are in src/alpha/scenarios.py.
+base:
+  beta_H: 0.02
+  delta_H: 0.01
+  e_H: 1.0            # MWh/person/year, essential service energy
+  ell_H: 1.0e-4       # km^2/person
+  e0: 10000.0         # MWh/hardware-unit/year at q=1
+  xi: 0.2
+  ell_A: 1.0e-4       # km^2/hardware-unit
+  w_H: 1.0
+  w_A0: 1.0
+  omega: 0.2
+  L_site: 100.0       # km^2
+  L_service: 2.0e6    # km^2, disjoint from L_site
+  ell_site: 1.0e-4    # km^2/hardware-unit
+  c_build: 5000.0     # MWh/hardware-unit
+  rho: 0.1
+  c_H: 10000.0
+  c_A: 0.5
+  H_ref: 8.0e9
+  M_max: 1.0e5
+  r0: 0.2
+  gamma: 0.0
+  tau_build: 2.0
+  eta: 0.2
+  A_c: 1.0e4
+  q_max: 100.0
+  q0: 1.0
+  nu: 2.0
+  q_c: 10.0
+  delta_A: 0.05
+  mu_A: 0.5
+  E_total: 3.0e10     # MWh/year, derived/rounded world-scale estimate
+  A0: 1.0e4
+  H0: 8.0e9
+  T: 100.0
+  dt: 0.5
+  H_ext: 1.0e6
+  H_min: 1.0e8
+  s_min: 0.8
+  W_window: 10.0
+  p_tol: 0.0
+  allocation_rule: proportional
+  growth_mode: saturating
+  budget_policy: endpoint_consistent
+  manufacturing_mode: substitutive
+scenarios:
+  low: {eta: 0.02, xi: 0.10, omega: 0.0, q_c: 20.0, M_max: 1.0e4, c_A: 0.2, r0: 0.1, E_total: 3.0e10}
+  moderate: {eta: 0.20, xi: 0.20, omega: 0.50, q_c: 10.0, M_max: 1.0e5, c_A: 0.5, r0: 0.2, E_total: 2.0e10, w_A0: 10.0}
+  rapid: {eta: 0.80, xi: 0.0, omega: 1.0, q_c: 5.0, M_max: 1.0e6, c_A: 1.0, r0: 0.5, E_total: 1.5e10, w_A0: 300.0}
+  stress: {eta: 0.5, xi: 0.0, omega: 1.0, q_c: 5.0, M_max: 1.0e6, c_A: 1.0, r0: 0.5, E_total: 1.0e10, e0: 10000.0, w_A0: 10000.0, beta_H: 0.2, delta_H: 0.12, H0: 1.0e8, H_min: 1.0e7}

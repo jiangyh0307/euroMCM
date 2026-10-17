@@ -1,0 +1,9 @@
+set,description,policy,prevent_last_success,prevent_first_failure,recover_last_success,recover_first_failure,window_years,no_ai_outcome,no_ai_terminal,no_ai_final_H,no_ai_extinction_time,no_intervention_outcome,no_intervention_extinction_time,no_intervention_final_H,coarse_step,refine_step
+base_stress,reference pressure background,R,42.5,43.0,57.0,57.5,14.5,marginal,False,16665371352.262856,,extinction,43.0,117003.15782514191,2.0,0.5
+base_stress,reference pressure background,C,42.5,43.0,65.5,66.0,23.0,marginal,False,16665371352.262856,,extinction,43.0,117003.15782514191,2.0,0.5
+fast_rsi,faster capability growth,R,40.5,41.0,55.5,56.0,15.0,marginal,False,16665371352.262856,,extinction,41.0,92517.9025430806,2.0,0.5
+fast_rsi,faster capability growth,C,40.5,41.0,64.5,65.0,24.0,marginal,False,16665371352.262856,,extinction,41.0,92517.9025430806,2.0,0.5
+energy_intensive_ai,higher AI operational energy intensity,R,38.0,38.5,53.5,54.0,15.5,marginal,False,16665371352.262856,,extinction,38.5,69072.01115304501,2.0,0.5
+energy_intensive_ai,higher AI operational energy intensity,C,34.5,35.0,59.5,60.0,25.0,marginal,False,16665371352.262856,,extinction,38.5,69072.01115304501,2.0,0.5
+low_energy_supply,lower total energy supply,R,40.0,40.5,55.0,55.5,15.0,marginal,False,13332591850.428429,,extinction,40.5,86383.86185765619,2.0,0.5
+low_energy_supply,lower total energy supply,C,38.5,39.0,62.5,63.0,24.0,marginal,False,13332591850.428429,,extinction,40.5,86383.86185765619,2.0,0.5

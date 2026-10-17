@@ -1,0 +1,413 @@
+% ARCHIVED v2 snapshot. Superseded by paper/draft_parts_i_iv.tex.
+% Its pre-specified terminology and validation claims are not current claims.
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{microtype}
+\graphicspath{{../results/figures/}}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\mathrm{d}}
+\title{Resource Competition, Recursive Self-Improvement,\\ and the Conditions for Human Viability}
+\author{EuroMCM 2026 Problem $\alpha$ Team\\\textit{Technical draft, Parts I--IV}}
+\date{First executable version}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop a unified resource-allocation framework for comparing historical hominin competition with conditional future scenarios involving recursively self-improving artificial intelligence (RSI). The same weighted proportional-fairness operator allocates food energy and effective land in the historical case, and operational energy and land service in the future case. The historical analysis asks whether the mechanism can produce replacement times of the order reported for Neanderthal--modern-human overlap; it is a compatibility exercise, not causal validation. The future analysis separates installed hardware, capability per hardware unit, construction energy, manufacturing, and facility land, and adds an operational alignment floor. We prove a single-resource allocation formula, a relative-advantage condition, an efficiency--expansion threshold, an industrial self-sufficiency threshold, and a sufficient forward-invariance condition for a human population floor. Numerical experiments show a narrow historical compatibility region, a conservative alignment certificate, and scenario probabilities that are highly sensitive to the disclosed parameter measure. All future probabilities are conditional on model structure and scenario assumptions, not estimates of real-world extinction risk.
+\end{abstract}
+
+\section{Introduction and modeling philosophy}
+
+The motivating question is:
+\begin{quote}
+Under what physical, dynamical, and resource-allocation conditions can humanity avoid extinction and marginalization in a world shared with recursively self-improving AI?
+\end{quote}
+We do not attempt to predict whether RSI will appear, to date a future extinction, or to estimate the probability of real-world catastrophe. Instead, we build a physically grounded, mathematically analyzable, historically constrained and robustness-oriented competition framework.
+
+A central methodological requirement is that the historical and future analyses use the \emph{same} allocation principle. It would be structurally uninformative to explain the historical case with one competition model and then invent an unrelated AI competition model. Both cases therefore use weighted proportional fairness with fixed-proportion resource bundles, while allowing demographic and technological parameters to differ.
+
+We distinguish three evidence categories throughout. \textbf{SOURCE} means reported in the problem statement or independently verifiable. \textbf{ESTIMATE} means a transparent derivation from evidence. \textbf{ASSUMPTION} means an exploratory scenario value. The historical bands, adult energy ranges, disputed density ratio and data-centre statistics are SOURCE in this sense; all demographic rates and RSI parameters are ESTIMATE or ASSUMPTION. No RSI parameter is empirically calibrated.
+
+\section{Unified resource-allocation framework}
+
+\subsection{Definitions and units}
+For active populations $i=1,2$, let $P_i>0$ be population, $d_{ij}\ge 0$ the requirement per population unit for resource $j$, $D_{ij}=d_{ij}P_i$ the total demand, $S_j\ge 0$ the supply, and $W_i=w_iP_i>0$ the competition weight. Satisfaction is $s_i\in[0,1]$, and actual allocation is
+\begin{equation}
+X_{ij}=D_{ij}s_i,\qquad \sum_i X_{ij}\le S_j.
+\label{eq:conservation}
+\end{equation}
+Each resource keeps its own unit. Energy flows, land services and hardware production are never added together. For humans versus hardware, $w_H$ and $w_A$ must be expressed in a common utility-weight unit; changing a population unit requires transforming both the per-unit demand and the per-unit weight. Multiplying all weights by a common positive constant leaves allocations unchanged.
+
+The baseline operator is
+\begin{equation}
+\max_{l_i\le s_i\le 1}\ \sum_i W_i\log s_i
+\quad\text{subject to}\quad \sum_i D_{ij}s_i\le S_j\ \ \forall j,
+\label{eq:fair}
+\end{equation}
+where $l_H=a b_H$ is the human protection floor and $l_A=0$. Here
+\begin{equation}
+b_H=\min\Bigl\{1,\ \min_{j:D_{Hj}>0}\frac{S_j}{D_{Hj}}\Bigr\},
+\label{eq:bH}
+\end{equation}
+with $b_H=1$ if all human demands vanish. In the historical case $a=0$. At $a=1$, $s_H$ reaches the maximum human satisfaction attainable from the operational supplies. When a positive feasible satisfaction vector exists, strict concavity gives a unique maximizer. Zero-population groups are removed; a zero-demand active group has optimal satisfaction one. If feasibility forces a group's satisfaction to zero, we use the boundary extension obtained as the limit of $\sum_iW_i\log(s_i+\epsilon)$ with $\epsilon\downarrow0$; for the two-group forced-zero cases this is equivalent to fixing the forced-zero coordinate and maximizing over the remaining coordinates.
+
+\subsection{KKT conditions and shadow prices}
+For a positive optimum, let $\lambda_j\ge0$ multiply the resource constraints, $u_i\ge0$ the upper bounds and $v_i\ge0$ the lower bounds. Stationarity is
+\begin{equation}
+\frac{W_i}{s_i}-\sum_j\lambda_jD_{ij}-u_i+v_i=0,
+\label{eq:kkt}
+\end{equation}
+with complementary slackness for all constraints. For $l_i<s_i<1$,
+\begin{equation}
+s_i=\frac{W_i}{\sum_j\lambda_jD_{ij}}.
+\label{eq:si}
+\end{equation}
+The multiplier $\lambda_j$ is the marginal optimal utility per unit of resource $j$ \emph{holding the protection floor fixed}. If $l_H=a b_H(S)$ depends on supplies, the envelope derivative is
+\begin{equation}
+\frac{\partial V}{\partial S_j}=\lambda_j-v_H\frac{\partial l_H}{\partial S_j},
+\label{eq:envelope}
+\end{equation}
+so a raw resource multiplier is not automatically the total comparative-static price. Redundant constraints can make duals nonunique even when the satisfaction vector is unique; we report reliability rather than fabricate prices.
+
+With a single binding energy constraint, the denominator in \eqref{eq:si} is $\lambda_ED_{iE}$; with a single binding land constraint it is $\lambda_LD_{iL}$; with several binding resources it is their price-weighted sum. A large demand for a scarce resource lowers satisfaction at a given weight.
+
+\begin{proposition}[Single-resource allocation]
+Suppose $a=0$, $P_i,w_i,d_i,S>0$, the resource is exhausted, and $0<s_i<1$ for both groups. Then
+\begin{equation}
+s_i=\frac{SW_i}{D_i(W_1+W_2)}
+=\frac{Sw_i}{d_i(w_1P_1+w_2P_2)}.
+\label{eq:single}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Stationarity gives $D_is_i=W_i/\lambda$. Summing over groups gives $S=(W_1+W_2)/\lambda$. Substitution and cancellation of $P_i$ gives \eqref{eq:single}. Conversely, if both values lie strictly between zero and one, they and $\lambda=(W_1+W_2)/S$ satisfy the KKT conditions; strict concavity gives uniqueness.
+\end{proof}
+
+If $S\ge D_1+D_2$, both satisfactions equal one. In an intermediate regime, capped water filling applies. Formula \eqref{eq:single} must not be used when a cap or floor binds or when multiple resources are active.
+
+\subsection{Exact two-group solver}
+The feasible set in $(s_1,s_2)$ is a polygon. For positive-feasible cases we enumerate feasible vertices from pairs of active resource and bound constraints, together with interior stationary points on each non-axis-aligned resource edge. On an edge $s(t)=u+tv$, an interior stationary point satisfies
+\begin{equation}
+\frac{W_1v_1}{u_1+tv_1}+\frac{W_2v_2}{u_2+tv_2}=0.
+\label{eq:edge}
+\end{equation}
+The derivative is strictly decreasing along a nonconstant edge with positive weights. Comparing the finite candidate set gives the exact optimizer in exact arithmetic. The implementation also handles zero supplies, forced-zero groups, tiny positive populations, and unit rescaling. A generic SLSQP fallback exists only for more than two active groups and is explicitly marked regularized.
+
+\section{Historical competition and compatibility}
+
+\subsection{Historical dynamics}
+Let $N$ and $M$ be Neanderthal and modern-human populations in the same fixed region, with time in years. Food-energy and effective-land demands are
+\begin{equation}
+D_{NE}=365m_NN,\quad D_{ME}=365m_MM,\quad
+D_{NL}=\ell_NN,\quad D_{ML}=\ell_MM.
+\label{eq:histdemand}
+\end{equation}
+The energy requirement $m_i$ is a whole-population adult-equivalent approximation; the problem's 3,000--7,000 kcal/day figures are adult estimates, not measured all-age averages. With the allocation at $a=0$,
+\begin{equation}
+\dot N=N(\beta_Ns_N-\delta_N),\qquad
+\dot M=M(\beta_Ms_M-\delta_M).
+\label{eq:histode}
+\end{equation}
+No separate logistic carrying capacity is added: resource scarcity is the density feedback. For positive initial populations, the multiplicative form preserves positivity. Let $r_i=\delta_i/\beta_i$. A viable resident requires $0<r_i<1$; if $\beta_i<\delta_i$, the population declines even at full satisfaction and replacement is not evidence for competition.
+
+\subsection{Relative advantage is not extinction}
+Under the interior single-energy-bottleneck conditions of Proposition 1,
+\begin{equation}
+\frac{\dd}{\dd t}\log\frac{M}{N}
+=\frac{S_E}{w_NN+w_MM}
+\left(\frac{\beta_Mw_M}{d_M}-\frac{\beta_Nw_N}{d_N}\right)
++\delta_N-\delta_M,\quad d_i=365m_i.
+\label{eq:prop2}
+\end{equation}
+For equal birth and death rates, $M/N$ increases exactly when $w_M/d_M>w_N/d_N$. This is an advantage in acquisition weight per unit basic energy requirement. It does not prove finite-time extinction or even $\dot N<0$; the latter requires $s_N<r_N$.
+
+Define $N_{\mathrm{crit}}=\kappa N_{\mathrm{ref}}$ and
+\begin{equation}
+T_{\mathrm{rep}}=\inf\{t\ge0:N(t)\le N_{\mathrm{crit}}\}.
+\label{eq:trep}
+\end{equation}
+If no crossing occurs before the horizon, the outcome is right-censored, not a fabricated extinction time. A deterministic positive solution does not reach zero in finite time, and $\dot N\ge-\delta_NN$ gives the lower bound
+\begin{equation}
+T_{\mathrm{rep}}\ge \delta_N^{-1}\log[N(0)/N_{\mathrm{crit}}].
+\label{eq:trepbound}
+\end{equation}
+
+\subsection{Invasion and coexistence}
+For a single resource and a viable sole resident $i$, the positive equilibrium is
+\begin{equation}
+P_i^*=S/(d_ir_i).
+\label{eq:resident}
+\end{equation}
+A rare invader $k$ has limiting satisfaction and invasion rate
+\begin{equation}
+s_{k|i}=\min\Bigl(1,\frac{w_kd_ir_i}{w_id_k}\Bigr),\qquad
+g_{k|i}=\beta_ks_{k|i}-\delta_k.
+\label{eq:invasion}
+\end{equation}
+For $0<r_k<1$, $g_{k|i}>0$ exactly when
+\begin{equation}
+C_k>C_i,\qquad C_i=\frac{w_i}{d_ir_i}=\frac{\beta_iw_i}{\delta_id_i}.
+\label{eq:C}
+\end{equation}
+If $C_N=C_M$, there is a continuum of equilibria $w_NN+w_MM=SC$ with $s_i=r_i$; this is neutral coexistence, not an isolated asymptotically stable coexistence point. For multiple resources, an interior positive equilibrium requires the allocator conditions with $s_i=r_i$ and nonnegative multipliers. With two independent binding resources, the binding pattern persists locally and the local Jacobian is $\mathrm{diag}(-\delta_N,-\delta_M)$, proving local asymptotic stability in the nondegenerate binding region.
+
+\subsection{Compatibility and non-identifiability}
+We define the European compatibility set
+\begin{equation}
+\Theta_{\mathrm{hist}}^{\mathrm{EU}}=\{\theta:2600\le T_{\mathrm{rep}}(\theta)\le5400,\
+100\le m_N-m_M\le350,\ \theta\text{ admissible}\}.
+\label{eq:compat}
+\end{equation}
+A separate regional set uses 1,400--2,900 years; the two bands are not intersected as if they described the same trajectory. The disputed 10:1 density ratio is treated as a separate regional initial-condition scenario, not a European initial condition.
+
+Several exact invariances establish non-identifiability: common multiplication of all $w_i$; common scaling of populations, supplies and absolute thresholds; common scaling of demands and supply within one resource; and common scaling of all demographic rates, which rescales the historical clock. Matching one duration therefore cannot identify all rates, resource scales, relative weights and thresholds. A compatible fraction depends on the declared design measure and is not a posterior probability.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_historical_trajectories.pdf}
+\caption{Baseline historical trajectories. The top panel shows $N(t)$ and $M(t)$ on a logarithmic scale and the effective threshold $N_{\mathrm{crit}}$; the middle panel shows allocated satisfaction; the bottom panel compares $T_{\mathrm{rep}}=2867$ years with the European and regional duration bands. The bands are observed durations, not calendar intervals. Baseline values are scenario assumptions.}
+\label{fig:hist}
+\end{figure}
+
+\subsection{Computed compatibility results}
+The baseline scenario gives $T_{\mathrm{rep}}=2867.46$ years, inside the European band. A 650-cell grid over $w_M/w_N\in[0.2,2.0]$ and $\beta_M/\beta_N\in[0.5,1.5]$, with all other parameters fixed, gives 14 European-compatible cells (2.15\%), 30 regional-compatible cells (4.62\%), 325 censored runs and no errors; the median crossed time is 525.64 years. The compatible region is a narrow diagonal band (Figure~\ref{fig:compat}). H0 ($w_M=w_N$) has a compatible cell, and H1 has 13 compatible cells (6 above and 7 below $w_M/w_N=1$); the exercise does not distinguish the two hypotheses.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig2_historical_compatibility.pdf}
+\caption{Computed $T_{\mathrm{rep}}$ over acquisition-weight and birth-rate ratios, with the H0 baseline marked. Grey cells are censored or incompatible runs. The compatible fraction is design-measure dependent.}
+\label{fig:compat}
+\end{figure}
+
+Sensitivity is substantial. Changing $\kappa$ from 0.001 to 0.05 changes $T_{\mathrm{rep}}$ from 3,757 to 2,239 years. Changing $M_0/N_0$ from 0.01 to 10 changes it from 3,696 to 1,211 years. The problem-reported energy difference range (100--350 kcal/day) spans roughly 5,594 to 1,698 years. These are order-of-magnitude compatibility results, not calibration.
+
+\section{Resource-constrained RSI dynamics}
+
+\subsection{States and physical accounting}
+Let $H$ be human population, $A$ installed hardware-equivalent units, and $q>0$ capability per hardware unit. Operational demands and weights are
+\begin{equation}
+D_{HE}=e_HH,\ D_{HL}=\ell_HH,\quad
+D_{AE}=e_0q^{-\xi}A,\ D_{AL}=\ell_AA,
+\quad W_H=w_HH,\ W_A=w_{A0}q^{\omega}A.
+\label{eq:rsidemand}
+\end{equation}
+Here $e_H$ is essential electricity/service energy, not metabolic calories. Facility footprint is separate from allocable land service. Let $L_{\mathrm{total}}=L_{\mathrm{site}}+L_{\mathrm{service}}+L_{\mathrm{other}}$ be a fixed disjoint partition, with $A_{\max}=L_{\mathrm{site}}/\ell_{\mathrm{site}}$. Installed equipment occupies its site; losing power does not release the site. In the three-state model, the hardware loss terms are interpreted as completed physical decommissioning, not mere shutdown.
+
+\subsection{Construction, manufacturing and the coupled system}
+Let $E_{\mathrm{total}}$ be the available annual energy flow and $c_{\mathrm{build}}$ the construction energy per new hardware unit. With a construction budget $R_{\mathrm{build}}$,
+\begin{equation}
+E_{\mathrm{op}}=E_{\mathrm{total}}-R_{\mathrm{build}},\qquad
+B_E=R_{\mathrm{build}}/c_{\mathrm{build}}.
+\label{eq:budget}
+\end{equation}
+The baseline endpoint-consistent rule is
+\begin{equation}
+b_H^{\mathrm{tot}}=\min\Bigl\{1,\frac{E_{\mathrm{total}}}{e_HH},\frac{L_{\mathrm{service}}}{\ell_HH}\Bigr\},
+\quad
+R_{\mathrm{build}}=\min\{\rho E_{\mathrm{total}},[E_{\mathrm{total}}-ab_H^{\mathrm{tot}}e_HH]_+\}.
+\label{eq:endpoint}
+\end{equation}
+The fixed-split variant $R_{\mathrm{build}}=\rho E_{\mathrm{total}}$ is retained only as a comparison; it cannot ensure the full $a=1$ endpoint because construction can reduce $E_{\mathrm{op}}$ below human needs.
+
+With $\zeta(q)=q^{\nu}/(q^{\nu}+q_c^{\nu})$ and $r_A(q)=r_0q^{\gamma}$,
+\begin{align}
+M&=\min\Bigl\{M_{\max},c_H[1-\zeta(q)]\frac{H}{H_{\mathrm{ref}}}+c_A\zeta(q)As_A\Bigr\},\label{eq:mfg}\\
+B&=\min\Bigl\{r_A(q)As_A,\ M,\ \frac{R_{\mathrm{build}}}{c_{\mathrm{build}}},\
+\frac{(A_{\max}-A)_+}{\tau_{\mathrm{build}}}\Bigr\},\label{eq:B}\\
+\dot H&=H(\beta_Hs_H-\delta_H),\label{eq:Hdot}\\
+\dot A&=B-\delta_AA-\mu_A(1-s_A)A,\label{eq:Adot}\\
+\dot q&=\eta q\frac{As_A}{A_c+As_A}\Bigl(1-\frac{q}{q_{\max}}\Bigr).\label{eq:qdot}
+\end{align}
+All four production bounds in \eqref{eq:B} are hardware units per year. The diminishing human term in \eqref{eq:mfg} is a substitution assumption; the additive alternative is a structural check. The model is aggregate and does not represent a full chip supply chain. Power supply is exogenous; the human-free counterfactual therefore conditions on continued electricity supply.
+
+For constant $A_{\max}$ and nonnegative parameters, the domain $H\ge0$, $0\le A\le A_{\max}$, $0<q\le q_{\max}$ is forward invariant for a well-posed allocation-coupled ODE. At $A=0$, construction is zero and $\dot A=0$; at $A=A_{\max}$, the site bound is zero and $\dot A\le0$. The saturating capability derivative vanishes at $q_{\max}$ and is nonnegative below it. The non-saturating alternative removes the ceiling and satisfies $q(t)\le q(0)e^{\eta t}$.
+
+\subsection{Efficiency and expansion}
+For $A,q>0$, the unconstrained AI operational energy demand is $E_A^d=e_0q^{-\xi}A$. Therefore
+\begin{equation}
+\frac{\dd}{\dd t}\log E_A^d=\frac{\dot A}{A}-\xi\frac{\dot q}{q}.
+\label{eq:efficiency}
+\end{equation}
+Demand increases exactly when $\dot A/A>\xi\dot q/q$. Efficiency does not imply decreasing aggregate consumption; demand and actual allocated consumption must be plotted separately.
+
+\subsection{Industrial self-sufficiency}
+Freeze $q$, let $H\to0$ and suppose $s_A=1$. Then
+\begin{equation}
+\dot A=\min\{r_A(q)A,M_{\max},c_A\zeta(q)A,B_E,B_{\mathrm{site}}\}-\delta_AA.
+\label{eq:selfA}
+\end{equation}
+For $A>0$, nonnegative hardware growth requires every term in the minimum to be at least $\delta_AA$. In particular, the necessary industrial condition is $c_A\zeta(q)\ge\delta_A$. If $c_A>\delta_A>0$, equality occurs at
+\begin{equation}
+q_{\mathrm{self}}=q_c\Bigl(\frac{\delta_A}{c_A-\delta_A}\Bigr)^{1/\nu}.
+\label{eq:qself}
+\end{equation}
+If $0<c_A\le\delta_A$, finite $q$ with $\zeta(q)<1$ cannot sustain positive $A$ at full resource adequacy. Even $q>q_{\mathrm{self}}$ does not suffice if desired expansion, $M_{\max}$, construction energy or site capacity is tighter. With $s_A<1$, the necessary condition strengthens to $c_A\zeta(q)s_A\ge\delta_A+\mu_A(1-s_A)$. Crossing $q_{\mathrm{self}}$ is not a bifurcation theorem.
+
+\subsection{Finite-horizon extinction screen}
+Because $\dot H=H(\beta_Hs_H-\delta_H)\ge-\delta_HH$,
+\begin{equation}
+H(t)\ge H(0)e^{-\delta_Ht}.
+\label{eq:Hbound}
+\end{equation}
+If $H(0)e^{-\delta_HT}>H_{\mathrm{ext}}$, no extinction outcome can occur by horizon $T$ under any admissible alignment or AI trajectory. With the baseline $H(0)=8\times10^9$, $\delta_H=0.01\,\mathrm{yr}^{-1}$, $T=100$ and $H_{\mathrm{ext}}=10^6$, the lower bound is approximately $2.95\times10^9$, so extinction within 100 years is impossible; only marginalization can occur. Extinction within $T$ requires faster baseline mortality, a smaller $H(0)/H_{\mathrm{ext}}$ ratio, or a longer horizon.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig3_rsi_scenarios.pdf}
+\caption{Human population, installed hardware, capability and automation fraction under three disclosed scenarios at $a=0.5$. All numerical values are scenario assumptions, not measured RSI parameters. Panels use separate axes and units.}
+\label{fig:rsi}
+\end{figure}
+
+\subsection{Computed scenario results}
+At $a=0.5$, Scenario A (low RSI growth) is non-marginal, with $A_{\mathrm{final}}=1.68\times10^5$ and $q=5.22$. Scenario B (moderate RSI growth) is non-marginal, but the AI collapses in the full human-present simulation ($A_{\mathrm{final}}=4.26$) even though it grows to the site cap in the human-free counterfactual. Scenario C (rapid RSI/automation) is marginal: $A$ reaches $9.08\times10^5$, $q=100$, and human adequacy is about $0.50$. The stress scenario reaches extinction at $a=0$ at $t=68.86$ years and marginal survival at $a=0.5$ and $1.0$. The low scenario's AI is not self-sustaining in the human-free counterfactual ($A_{\mathrm{end}}/A_0=0.007$); B, C and stress are self-sustaining there ($A_{\mathrm{end}}/A_0\approx90.5$--$90.9$), conditional on exogenous power. This distinguishes industrial capability from success in the full resource competition.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig4_rsi_resources.pdf}
+\caption{Resource and bottleneck diagnostics for the stress scenario at $a=0.5$: AI operational energy demand and allocation, human resource adequacy, construction bottlenecks, and human population with viability thresholds. Operational and construction energy are shown in separate units and satisfy the budget identities.}
+\label{fig:resources}
+\end{figure}
+
+\section{Alignment and human viability}
+
+\subsection{Operational definition}
+For operational human demand $D_{Hj}$ and supplies $S_j$, $b_H$ is defined by \eqref{eq:bH}. The allocation enforces $s_H\ge ab_H$. At $a=0$ this is ordinary competition; at $a=1$ the human group receives the maximum basic satisfaction attainable over the operational feasible set, leaving only residual services to AI. This is an operational resource-protection model, not a measurement of AI intent.
+
+The endpoint-consistent construction budget \eqref{eq:endpoint} is necessary for the original problem's full $a=1$ endpoint. At $a=1$, $E_{\mathrm{op}}\ge b_H^{\mathrm{tot}}e_HH$, hence $b_H=b_H^{\mathrm{tot}}$, and the floor gives $s_H=b_H^{\mathrm{tot}}$: construction and AI operations cannot reduce the maximum human basic-service satisfaction attainable from total current energy and the designated human land-service pool. The proof is relative to the fixed land partition; it does not restore historical land already committed to facilities.
+
+\subsection{Outcomes}
+Choose $T>0$, final-window length $0<W\le T$, $0<H_{\mathrm{ext}}<H_{\min}\le H(0)$, and $0<s_{\min}\le1$. Define
+\begin{equation}
+p_{\mathrm{bad}}=\frac1W\int_{T-W}^{T}
+\mathbf{1}\{H(t)<H_{\min}\ \text{or}\ s_H(t)<s_{\min}\}\,\dd t.
+\label{eq:pbad}
+\end{equation}
+For a declared tolerance $p_{\mathrm{tol}}\in[0,1)$, the outcomes are: extinction if $\min_{t\le T}H(t)\le H_{\mathrm{ext}}$; marginal survival if not extinct and $p_{\mathrm{bad}}>p_{\mathrm{tol}}$; non-marginal survival if not extinct and $p_{\mathrm{bad}}\le p_{\mathrm{tol}}$. These categories are mutually exclusive and exhaustive for successful runs.
+
+\subsection{Population-floor certificate}
+Let $K=\{H\ge H_{\min}\}$ intersect the feasible hardware/capability domain. Suppose $\beta_H>0$, $\delta_H\ge0$, $H_{\min}>0$, $H(0)\ge H_{\min}$; the coupled system has a unique solution on $[0,T]$ and is locally Lipschitz near the boundary; the other state constraints are forward invariant; $b_H\ge b_{\mathrm{under}}>0$ uniformly on the boundary; the allocator enforces $s_H\ge ab_H$ exactly; and $ab_{\mathrm{under}}\ge\delta_H/\beta_H$. Then $H(t)\ge H_{\min}$ for all $t\in[0,T]$. A sufficient alignment level is
+\begin{equation}
+a_{\mathrm{safe}}=\frac{\delta_H}{\beta_Hb_{\mathrm{under}}}.
+\label{eq:asafe}
+\end{equation}
+At the boundary $H=H_{\min}$,
+\begin{equation}
+\dot H=H_{\min}(\beta_Hs_H-\delta_H)
+\ge H_{\min}(\beta_Hab_{\mathrm{under}}-\delta_H)\ge0.
+\label{eq:boundary}
+\end{equation}
+The tangent-cone forward-invariance theorem for locally Lipschitz ODEs, together with the other invariant constraints, gives invariance of $K$. This is a sufficient population-floor guarantee, not a necessary survival criterion, not a welfare guarantee, and not an unconditional real-world safety guarantee.
+
+With constant demands and operational supply floors $S_j\ge S_{j,\min}$,
+\begin{equation}
+b_{\mathrm{under}}=\min\Bigl\{1,\min_j\frac{S_{j,\min}}{d_{Hj}H_{\min}}\Bigr\}.
+\label{eq:bunder}
+\end{equation}
+For the endpoint-consistent budget, $E_{\mathrm{op}}\ge(1-\rho)E_{\mathrm{total}}$, so $E_{\mathrm{total}}\ge E_{\min}$ and $\rho\le\rho_{\max}<1$ give $E_{\mathrm{op}}\ge(1-\rho_{\max})E_{\min}$. The certificate needs no forecast of $A$ or $q$, but it does need a credible resource floor. A power supply that collapses with human industrial loss cannot be assigned a positive floor without justification.
+
+\subsection{Computed phase diagram}
+For the stress scenario, $a_{\mathrm{safe}}=0.600$ and $b_{\mathrm{under}}=1$. On the 0.1 alignment grid, the numerical population-floor threshold at $\eta=0.5$ is $a_{\mathrm{num,pop}}=0.400$; the analytic certificate is conservative. The phase diagram shows extinction at low $a$ and higher $\eta$, marginal survival elsewhere, and no non-marginal outcome in this stress scenario (Figure~\ref{fig:phase}). Fixed-policy safe slices show that at $a=0$ and $0.2$ all tested initial $(A_0,q_0)$ combinations fail the population floor, while at $a=0.4$ lower-left states are safe and high-$A_0/q_0$ states remain unsafe. Classification depends on the horizon and is not monotone in $a$; no unique numerical threshold is claimed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig5_alignment_phase.pdf}
+\caption{Stress-scenario alignment--RSI phase diagram and the fixed-$\eta$ minimum population versus the analytic sufficient threshold. The certificate is for the population floor, not non-marginal welfare.}
+\label{fig:phase}
+\end{figure}
+
+\section{Uncertainty and structural robustness}
+
+\subsection{Scenario measures}
+We sample independently from three \emph{pre-specified} measures. The conservative measure has low RSI expansion pressure and higher energy supply. The central measure has intermediate ranges. The broad aggressive measure covers high RSI pressure but is not a narrow stress corner. A fourth measure, \texttt{stress\_augmented}, was constructed after exploratory runs to exercise the extinction boundary; it is explicitly post-hoc, not pre-registered, and is reported separately. Each draw is simulated over 11 alignment values. Failed or infeasible runs are reported separately and excluded from the probability denominator.
+
+\subsection{Probabilities}
+For successful runs, the estimated outcome probabilities are
+\begin{equation}
+\widehat P_k(a\mid\Pi,F)=N^{-1}\sum_{n=1}^N\mathbf{1}\{C(\theta^{(n)},a,F)=k\},
+\quad k\in\{\mathrm{ext},\mathrm{marg},\mathrm{n.m.}\}.
+\label{eq:prob}
+\end{equation}
+With $N=100$ iid draws per measure, no runs failed, and the three probabilities sum to one in every cell. Table~\ref{tab:prob} reports selected alignments. The pre-specified measures are dominated by marginal survival. The conservative measure is entirely marginal in this sample; the central measure is 98\% marginal and 2\% non-marginal; the broad aggressive measure has a 2\% extinction frequency at $a=0$ (Wilson $[0.006,0.070]$), no extinction at $a\ge0.5$, and 3--4\% non-marginal survival. The post-hoc stress-augmented measure produces a 42\% extinction frequency at $a=0$ and no extinction at $a\ge0.5$; its non-marginal fraction is about 0.43 at $a=0.8$ and 0.19 at $a=1.0$. That transition is not monotone. Wilson intervals are pointwise sampling-error intervals and exclude structural and scenario-prior uncertainty.
+
+\begin{table}[t]
+\centering
+\caption{Conditional outcome probabilities ($N=100$). The first three measures are pre-specified; the last block is an exploratory, post-hoc stress measure and is not a pre-registered comparison. Intervals are Wilson 95\% intervals for the extinction estimate where shown. These are not real-world extinction probabilities.}
+\label{tab:prob}
+\begin{tabular}{llccc}
+\toprule
+Measure & $a$ & $P_{\mathrm{ext}}$ & $P_{\mathrm{marg}}$ & $P_{\mathrm{n.m.}}$\\
+\midrule
+Conservative & 0 & 0.00 & 1.00 & 0.00\\
+Conservative & 0.5 & 0.00 & 1.00 & 0.00\\
+Conservative & 1.0 & 0.00 & 1.00 & 0.00\\
+Central & 0 & 0.00 & 0.98 & 0.02\\
+Central & 0.5 & 0.00 & 0.98 & 0.02\\
+Central & 1.0 & 0.00 & 0.98 & 0.02\\
+Aggressive & 0 & 0.02 [0.006,0.070] & 0.95 & 0.03\\
+Aggressive & 0.5 & 0.00 [0.00,0.037] & 0.97 & 0.03\\
+Aggressive & 1.0 & 0.00 [0.00,0.037] & 0.96 & 0.04\\
+\midrule
+Stress-augmented (post-hoc) & 0 & 0.42 [0.33,0.52] & 0.58 & 0.00\\
+Stress-augmented (post-hoc) & 0.5 & 0.00 [0.00,0.037] & 1.00 & 0.00\\
+Stress-augmented (post-hoc) & 1.0 & 0.00 [0.00,0.037] & 0.81 & 0.19 [0.13,0.28]\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig6_uq_probabilities.pdf}
+\caption{Outcome probabilities versus alignment for the three pre-specified measures, with pointwise Wilson bands. The probabilities are conditional on the disclosed scenario measure and model structure.}
+\label{fig:uq}
+\end{figure}
+
+\subsection{Controlled demographic/AI factorial}
+To separate AI pressure from human demographic assumptions, we run a $2\times2$ factorial: baseline or fast human demography crossed with baseline or stress AI. At $a=0$, baseline human + baseline AI is non-marginal; baseline human + stress AI is marginal with $\min H=3.57\times10^9$; fast human + baseline AI is marginal with $\min H=1.00\times10^8$; only fast human + stress AI reaches extinction, at $t=68.86$ years. Neither faster human demography alone nor stress AI alone produces extinction in this design. The baseline-human + stress-AI arm remains above the finite-horizon lower bound. This is a scenario result, not a claim about real human demography.
+
+\subsection{Sensitivity and priorities}
+Rank-based screening at $a=0.5$ for $\log_{10}(\min H)$ and at $a=0$ for extinction excludes the initial condition $H_0$. For the three pre-specified measures, the largest mean absolute associations are \texttt{L\_service} (0.151), \texttt{beta\_H} (0.135), \texttt{E\_total} (0.128), \texttt{xi} (0.096) and \texttt{omega} (0.088). For the post-hoc stress-augmented measure, they are \texttt{e0} (0.466), \texttt{r\_H} (0.252), \texttt{E\_total} (0.205), \texttt{xi} (0.203) and \texttt{beta\_H} (0.140). These are associations, not causal effects. The ranking is measure-dependent: land service and human demography dominate under the pre-specified measures, while AI energy intensity dominates under the post-hoc stress measure. \texttt{E\_total} and \texttt{xi} are the only inputs near the top of both lists. The candidate measurement list is conditional, not a universal policy conclusion.
+
+\subsection{Structural robustness}
+We cross 20 sampled parameter vectors with proportional versus priority allocation and saturating versus non-saturating capability growth, at six alignment values (80 pairs per alignment), separately for the pre-specified aggressive measure and the exploratory stress-augmented measure. For the pre-specified aggressive library, the population-floor safe fraction is 78/80 at $a=0$ and 80/80 for $a\ge0.2$; the robust population-floor set is $\{0.2,0.4,0.6,0.8,1.0\}$, and the non-marginal safe fraction is 2/80 at $a=0.8$ and 4/80 at $a=1.0$. For the exploratory stress-augmented library, the population-floor safe fraction rises from 60/80 at $a=0$ to 80/80 at $a\ge0.6$; the robust population-floor set is $\{0.6,0.8,1.0\}$, and the non-marginal safe fraction is 18/80 at $a=0.8$ and 16/80 at $a=1.0$. The robust non-marginal set is empty in both. These are empirical intersections over a finite tested library, not continuous-domain viability kernels.
+
+\section{Discussion and limitations}
+
+The framework's contribution is the integration of a common constrained allocation mechanism, explicit hardware and construction limits, industrial substitution, and a resource-floor viability certificate. It is not the invention of KKT theory, competitive exclusion, or forward invariance.
+
+The historical ranges constrain a highly non-identifiable parameter family. The compatible region is narrow under the baseline scenario, but the fraction depends on the grid design and fixed remaining parameters. Spatial migration, stochastic demographic loss, age composition, disease and assimilation are omitted. Contemporary data-centre statistics cannot calibrate hypothetical RSI systems without a mapping from hardware units to services and a separation of RSI from other computing. Population dynamics omit age structure, health adaptation, migration and policy. Industrial capacity is aggregated; power continuity is prescribed; the land partition is fixed; resource-induced hardware loss assumes completed decommissioning. The mapping from capability to energy efficiency or bargaining weight is speculative. The alignment certificate is conditional on resource floors and feasible physical states, and a population floor is not a welfare guarantee.
+
+The original problem additionally requires at least two human intervention policies and timing comparisons, a one-page ENOCH letter naming a present-day application and a valuable unknown, a summary sheet, verified references and any required AI-use report. These are outstanding P1/P2 requirements. A natural present-day application is competition between data-centre expansion and essential community electricity and land services; it requires separate empirical calibration.
+
+\appendix
+\section{Parameter provenance (excerpt)}
+Every parameter is recorded with unit, baseline, range, category and rationale in \texttt{results/tables/parameter\_table.csv}. The main categories are SOURCE (problem-reported or verifiable), ESTIMATE (transparent derivation) and ASSUMPTION (exploratory scenario). The historical energy difference is ESTIMATE under an adult-equivalent whole-population approximation. The world-electricity scale is an ESTIMATE from rounded IEA data. All demographic and RSI parameters are ASSUMPTION. No RSI parameter is a measured value.
+
+\section{Numerical verification}
+The test suite covers the analytic single-resource formula, KKT stationarity, abundant supply, caps and floors, zero populations, zero supply, two binding resources, unit rescaling, tiny populations, random feasibility, historical event/censoring/time scaling, RSI domain and energy conservation, the efficiency identity, the industrial threshold, alignment endpoints, the viability certificate, time-step convergence, non-saturating growth, sampling reproducibility and probability partitions. Current result: 41 passed. The primary RSI integrator is fixed-step RK4. The earlier adaptive-solver chatter was partly caused by a scale-separation defect in the allocator; after the fix, adaptive solve_ivp completes the previously hanging case and agrees with RK4 in a regression test. Time-step convergence and integrator agreement were checked on representative scenarios, but no global error bound is claimed.
+
+\section{Reproduction}
+From the repository root:
+\begin{verbatim}
+python3 -m pip install -r requirements.txt
+./run_all.sh
+\end{verbatim}
+Individual commands and all figure/table paths are listed in \texttt{README.md} and \texttt{docs/results.md}.
+
+\begin{thebibliography}{99}
+\bibitem{higham2014} T. Higham et al. The timing and spatiotemporal patterning of Neanderthal disappearance. \emph{Nature}, 2014. (Problem-reported source; to be verified.)
+\bibitem{djakovic2022} I. Djakovic et al. The last Neanderthals of southern Iberia and the Mediterranean rim. \emph{Scientific Reports}, 2022. (Problem-reported source; to be verified.)
+\bibitem{mellars2011} P. Mellars and J. C. French. Tenfold population increase in Western Europe at the Neanderthal-to-modern-human transition. \emph{Science}, 2011. (Problem-reported source; disputed; to be verified.)
+\bibitem{snodgrass2009} J. J. Snodgrass and W. R. Leonard. Neanderthal energetics. In \emph{The Evolution of Hominin Diets}, 2009. (Problem-reported source; to be verified.)
+\bibitem{froehle2009} A. W. Froehle and S. E. Churchill. Energetic competition between Neanderthals and anatomically modern humans. \emph{PaleoAnthropology}, 2009. (Problem-reported source; to be verified.)
+\bibitem{iea2025} International Energy Agency. \emph{Energy and AI}, 2025. (Problem-reported source for data-centre electricity statistics; to be verified.)
+\bibitem{boyd2004} S. Boyd and L. Vandenberghe. \emph{Convex Optimization}. Cambridge University Press, 2004.
+\bibitem{aubin1991} J.-P. Aubin. \emph{Viability Theory}. Birkh\"auser, 1991.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,9 @@
+branch,tau,shutdown_fraction,risk_outcome,extinction,terminal_extinction,recovered_after_extinction,rapid_collapse,cumulative_collapse,extinction_time,final_H,min_H,final_s_H,final_window_bad_fraction,operating_fraction_end
+success,0.0,0.5,marginal,False,False,False,False,False,,7424206920.2221365,999999999.9999993,0.6000028693182213,1.0,
+success,0.0,1.0,marginal,False,False,False,False,False,,14999004637.019846,999999999.9999993,0.6000398171613747,1.0,
+success,25.0,0.5,marginal,False,False,False,False,False,,7419573767.036924,816670374.3116693,0.6003775411379784,1.0,
+success,25.0,1.0,marginal,False,False,False,False,False,,14972910909.252337,816671085.0216161,0.6010855240204865,1.0,
+success,50.0,0.5,extinction,True,False,True,True,False,43.0,2333159523.5899997,42733038.87827167,1.0,0.0,
+success,50.0,1.0,extinction,True,False,True,True,False,43.0,2333143370.4533205,42733056.157894276,1.0,0.0,
+success,75.0,0.5,extinction,True,True,False,True,True,43.0,16522295.14062826,2236045.3946423302,1.0,1.0,
+success,75.0,1.0,extinction,True,True,False,True,True,43.0,16522302.919655826,2236044.2897956525,1.0,1.0,
