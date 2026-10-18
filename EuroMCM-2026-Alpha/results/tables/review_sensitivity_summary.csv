@@ -1,0 +1,17 @@
+set,policy,prevent_last_success,prevent_next_failure,prevent_right_censored,prevent_contiguous_sample_success,recover_last_success,recover_next_failure,recover_right_censored,recover_contiguous_sample_success,window
+base,C,42.5,43.0,False,True,65.5,66.0,False,True,23.0
+base,R,42.5,43.0,False,True,57.0,57.5,False,True,14.5
+horizon_150,C,42.5,43.0,False,True,86.0,86.5,False,True,43.5
+horizon_150,R,42.5,43.0,False,True,69.5,70.0,False,True,27.0
+horizon_50,C,42.5,43.0,False,True,45.5,46.0,False,True,3.0
+horizon_50,R,42.5,43.0,False,True,44.5,45.0,False,True,2.0
+mortality_002,C,38.5,39.0,False,True,61.0,61.5,False,True,22.5
+mortality_002,R,38.5,39.0,False,True,52.5,53.0,False,True,14.0
+mortality_006,C,33.0,33.5,False,True,53.5,54.0,False,True,20.5
+mortality_006,R,33.0,33.5,False,True,45.5,46.0,False,True,12.5
+mortality_012,C,28.0,28.5,False,True,46.5,47.0,False,True,18.5
+mortality_012,R,28.5,29.0,False,True,38.5,39.0,False,True,10.0
+threshold_high,C,39.0,39.5,False,True,63.5,64.0,False,True,24.5
+threshold_high,R,39.0,39.5,False,True,54.5,55.0,False,True,15.5
+threshold_low,C,48.5,49.0,False,True,69.0,69.5,False,True,20.5
+threshold_low,R,48.5,49.0,False,True,61.5,62.0,False,True,13.0

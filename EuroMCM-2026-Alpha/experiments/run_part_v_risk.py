@@ -57,7 +57,7 @@ def run_grid(background, thresholds):
         sim = simulate_rsi(background, 0.0, intervention=policy,
                            terminate_on_extinction=False)
         risk = assess_risk(sim.t, sim.H, sim.s_H, background.H0, thresholds,
-                           p_bad=sim.p_bad_final_window)
+                           p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
         damage = paired_damage(sim.t, sim.H, no_ai.t, no_ai.H)
         row = {
             "policy": name, "kind": policy.kind, "tau": policy.tau,
@@ -87,7 +87,9 @@ def run_grid(background, thresholds):
             "paired_mean_damage": damage["mean_damage"],
             "paired_max_damage": damage["max_damage"],
             "no_ai_risk_outcome": assess_risk(no_ai.t, no_ai.H, no_ai.s_H,
-                                              no_ai_params.H0, thresholds).outcome,
+                                              no_ai_params.H0, thresholds,
+                                              p_bad=no_ai.p_bad_final_window,
+                                              extinction_event_time=no_ai.extinction_time).outcome,
             **cost_metrics(sim, background, 0.0, policy),
         }
         rows.append(row)

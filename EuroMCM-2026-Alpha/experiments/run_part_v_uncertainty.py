@@ -44,7 +44,7 @@ def main(n=8, seed=2027):
             sim = simulate_rsi(p, 0.0, intervention=pol,
                                terminate_on_extinction=False)
             risk = assess_risk(sim.t, sim.H, sim.s_H, p.H0, thresholds,
-                               p_bad=sim.p_bad_final_window)
+                               p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
             damage = paired_damage(sim.t, sim.H, no_sim.t, no_sim.H)
             rows.append({
                 "sample_id": sid, "policy": name,

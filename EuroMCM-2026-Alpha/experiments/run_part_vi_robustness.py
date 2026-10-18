@@ -25,12 +25,12 @@ def run_tau(params, thresholds, name, policy_name, policy_maker, tau, stage):
     sim = simulate_rsi(params, 0.0, intervention=policy,
                        terminate_on_extinction=False, max_step=0.5)
     risk = assess_risk(sim.t, sim.H, sim.s_H, params.H0, thresholds,
-                       p_bad=sim.p_bad_final_window)
+                       p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
     minH = float(np.min(sim.H))
     finalH = float(sim.H[-1])
     return {
         "set": name, "policy": policy_name, "stage": stage, "tau": float(tau),
-        "prevent_success": bool(minH > thresholds.H_ext),
+        "prevent_success": bool(not np.isfinite(sim.extinction_time)),
         "recover_success": bool(finalH > thresholds.H_ext),
         "risk_outcome": risk.outcome,
         "min_H": minH, "final_H": finalH,
@@ -88,11 +88,11 @@ def main():
         no_ai = replace(params, A0=0.0, rho=0.0)
         no_sim = simulate_rsi(no_ai, 0.0, terminate_on_extinction=False)
         no_risk = assess_risk(no_sim.t, no_sim.H, no_sim.s_H, params.H0,
-                              thresholds, p_bad=no_sim.p_bad_final_window)
+                              thresholds, p_bad=no_sim.p_bad_final_window, extinction_event_time=no_sim.extinction_time)
         ai0 = simulate_rsi(params, 0.0, intervention=None,
                            terminate_on_extinction=False)
         ai0_risk = assess_risk(ai0.t, ai0.H, ai0.s_H, params.H0, thresholds,
-                               p_bad=ai0.p_bad_final_window)
+                               p_bad=ai0.p_bad_final_window, extinction_event_time=ai0.extinction_time)
         for policy_name, maker in policies.items():
             print(f"  policy {policy_name}: coarse scan", flush=True)
             rows = []

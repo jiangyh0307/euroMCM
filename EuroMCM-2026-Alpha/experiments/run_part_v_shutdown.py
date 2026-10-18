@@ -26,7 +26,7 @@ def branch_row(policy, tau, k, params, thresholds, branch):
     sim = simulate_rsi(params, 0.0, intervention=policy,
                        terminate_on_extinction=False)
     risk = assess_risk(sim.t, sim.H, sim.s_H, params.H0, thresholds,
-                       p_bad=sim.p_bad_final_window)
+                       p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
     return {
         "branch": branch, "tau": tau, "shutdown_fraction": k,
         "risk_outcome": risk.outcome,
@@ -57,7 +57,7 @@ def main():
     fail_sim = simulate_rsi(params, 0.0, intervention=None,
                             terminate_on_extinction=False)
     fail_risk = assess_risk(fail_sim.t, fail_sim.H, fail_sim.s_H, params.H0,
-                            thresholds, p_bad=fail_sim.p_bad_final_window)
+                            thresholds, p_bad=fail_sim.p_bad_final_window, extinction_event_time=fail_sim.extinction_time)
     failures = {
         "risk_outcome": fail_risk.outcome,
         "extinction": fail_risk.extinction,

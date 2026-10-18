@@ -72,6 +72,8 @@ class Intervention:
 class RSIParameters:
     beta_H: float = 0.02
     delta_H: float = 0.01
+    deprivation_mortality: float = 0.0
+    deprivation_threshold: float = 0.8
     e_H: float = 1.0
     ell_H: float = 1.0e-4
     e0: float = 10000.0
@@ -124,6 +126,8 @@ class RSIParameters:
             raise ValueError("xi and omega must be nonnegative")
         if self.beta_H <= 0:
             raise ValueError("beta_H must be positive")
+        if self.deprivation_mortality < 0 or not (0 < self.deprivation_threshold <= 1):
+            raise ValueError("invalid deprivation mortality settings")
         if self.delta_H < 0:
             raise ValueError("delta_H must be nonnegative")
         if self.e_H <= 0 or self.ell_H < 0:
@@ -309,7 +313,10 @@ def rsi_diagnostics(
     else:
         B = max(0.0, intervention.cap_rate(t, A_eval, B0, params))
 
-    dH = H_eval * (params.beta_H * s_H - params.delta_H)
+    excess_mortality = params.deprivation_mortality * max(
+        0.0, 1.0 - s_H / params.deprivation_threshold
+    )
+    dH = H_eval * (params.beta_H * s_H - params.delta_H - excess_mortality)
     dA = B - params.delta_A * A_eval - params.mu_A * (1.0 - s_A) * A_op
     saturating = 1.0
     if params.growth_mode == "saturating":
@@ -595,7 +602,8 @@ def simulate_rsi(
             y = sol.sol(t)
         refined_bad_fraction = _dense_bad_fraction(
             sol.sol, params, alignment, float(sol.t[-1]),
-            list(sol.t_events[1]) + list(sol.t_events[2]),
+            list(sol.t_events[1]) + list(sol.t_events[2]) +
+            ([] if intervention is None else [intervention.tau]),
             intervention=intervention,
         )
         diagnostics.update({"rhs_evaluations": sol.nfev,

@@ -52,10 +52,10 @@ def main():
                 sim = simulate_rsi(params, 0.0, intervention=maker(float(tau)),
                                    terminate_on_extinction=False)
                 risk = assess_risk(sim.t, sim.H, sim.s_H, params.H0, thresholds,
-                                   p_bad=sim.p_bad_final_window)
+                                   p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
                 rows.append({
                     "policy": name, "tau": float(tau),
-                    "prevent_success": bool(np.min(sim.H) > thresholds.H_ext),
+                    "prevent_success": bool(not np.isfinite(sim.extinction_time)),
                     "recover_success": bool(sim.H[-1] > thresholds.H_ext),
                     "risk_outcome": risk.outcome,
                     "min_H": sim.min_H, "final_H": float(sim.H[-1]),

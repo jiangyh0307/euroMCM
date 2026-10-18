@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-18",
+  "canonical_manuscript": "paper/main.tex",
+  "verified_outputs": [
+    {
+      "previous_output": "EuroMCM_模型核查与敏感性报告.md",
+      "project_path": "docs/review_followup_zh.md",
+      "sha256": "7a2488dcb1241aa28b9634f59dd33384c61ced703ccc46dcee4116bb52ac944a"
+    },
+    {
+      "previous_output": "EuroMCM_数学贡献与论文结构.md",
+      "project_path": "paper/introduction_and_structure_zh.md",
+      "sha256": "7e9a3bae289761a0f47d68b00c148aedcb9be54137fd0bae80e1926b8ab8388f"
+    },
+    {
+      "previous_output": "政策机制对比.png",
+      "project_path": "results/figures/review_policy_mechanisms.png",
+      "sha256": "f032bdd397510ad54af7b045234c62404aed0d338f101beb6d37a1f2ae6baf5e"
+    },
+    {
+      "previous_output": "review_risk_conventions.csv",
+      "project_path": "results/tables/review_risk_conventions.csv",
+      "sha256": "0ed59927cb058c53ba48d9d72d9834a5a664d17d7239cfd901208fe8ff40bde9"
+    },
+    {
+      "previous_output": "review_boundary_recheck.csv",
+      "project_path": "results/tables/review_boundary_recheck.csv",
+      "sha256": "e022121fd61f3a3badf30e1947528ff2385dab87710e8b6daf806bbe5a41566e"
+    },
+    {
+      "previous_output": "review_sensitivity_summary.csv",
+      "project_path": "results/tables/review_sensitivity_summary.csv",
+      "sha256": "6060d218c683979a10882558346601fb3380042b31f689b6ce05c57f0482c97c"
+    },
+    {
+      "previous_output": "review_sensitivity_manifest.json",
+      "project_path": "results/tables/review_sensitivity_manifest.json",
+      "sha256": "eb61bee558ab73ad71e3926a6462999802c0ab93be0ee0c79d5e3ad733e4daa3"
+    },
+    {
+      "previous_output": "review_sensitivity_runs.csv",
+      "project_path": "results/tables/review_sensitivity_runs.csv",
+      "sha256": "264969da4e881df3abcb3ffb97baa1f338128aa3adc5d94e4c67b030fb417869"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/main.tex",
+      "project_path": "paper/main.tex",
+      "sha256": "3b7ad464ea6affef511c1a962dede27dfdca1a1b58b9a85dc2b7a0c712d55adb"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/README_zh.md",
+      "project_path": "paper/README_zh.md",
+      "sha256": "7a8f49a0841b1fb0ebd511601f7fb927353acc3adeecdbd80029533ff30dd4ab"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/RESULT_SOURCES.md",
+      "project_path": "paper/RESULT_SOURCES.md",
+      "sha256": "a49feb34407044d2184b7735ff09588869130c87e7514e6f9f8f1ace2ac5430d"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/fig2_historical_compatibility.pdf",
+      "project_path": "paper/figures/fig2_historical_compatibility.pdf",
+      "sha256": "ec2ae8015855f1421eef3f6968166fc600dc31662a1d9abb024b7837be717991"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/review_policy_mechanisms.png",
+      "project_path": "paper/figures/review_policy_mechanisms.png",
+      "sha256": "f032bdd397510ad54af7b045234c62404aed0d338f101beb6d37a1f2ae6baf5e"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/p0_controlled_rsi.pdf",
+      "project_path": "paper/figures/p0_controlled_rsi.pdf",
+      "sha256": "5291c13bdd77b0555e21594691e1ed2b174676dbe2426f189ae5ff5b7e566c53"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/fig1_historical_trajectories.pdf",
+      "project_path": "paper/figures/fig1_historical_trajectories.pdf",
+      "sha256": "28c1b790a518faa4a9ad7ae036a1862b3550e3531f0dd59b07897c85710c2bd1"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/review_sensitivity_windows.png",
+      "project_path": "paper/figures/review_sensitivity_windows.png",
+      "sha256": "dee8d499371dc068a12b583555d56e9712d76854c868558a586fd2c95eea4675"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/part_v_ponr_R_u0.8.pdf",
+      "project_path": "paper/figures/part_v_ponr_R_u0.8.pdf",
+      "sha256": "d42d2e17ed8126e6d5d5dab40e4758becc0af4c1fe4e42f03e11d9108e3d4df7"
+    },
+    {
+      "previous_output": "EuroMCM_Overleaf/figures/part_v_ponr_C_c0.1.pdf",
+      "project_path": "paper/figures/part_v_ponr_C_c0.1.pdf",
+      "sha256": "a539e558f58e06efb528dc9f2921784330f7fd2cde4b87dddb9f1dfcae6b179c"
+    }
+  ],
+  "note": "Overleaf ZIP regenerated from project-local canonical files. No remote operations."
+}

@@ -1,0 +1,715 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{iftex}
+\ifdefined\synctex\synctex=0\fi
+\ifPDFTeX
+  \pdfinfoomitdate=1
+  \pdfsuppressptexinfo=-1
+  \pdftrailerid{}
+  \pdfinfo{/Creator () /Producer ()}
+\fi
+\ifLuaTeX\pdfvariable suppressoptionalinfo 1023\relax\fi
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,microtype}
+\usepackage[left=1in,right=0.75in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{newtxmath,xcolor}
+\usepackage{booktabs,array,tabularx,longtable}
+\usepackage{graphicx,caption,subcaption,float,placeins}
+\usepackage{enumitem,fancyhdr,lastpage}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{itemsep=2pt,topsep=3pt,leftmargin=*}
+\setlist[enumerate]{itemsep=2pt,topsep=3pt,leftmargin=*}
+\captionsetup{font=small,labelfont=bf}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{corollary}[proposition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[proposition]{Remark}
+\newcommand{\TeamNumber}{000000000} % Replace with the actual competition control number.
+\definecolor{EuroBlue}{HTML}{183399}
+\newcommand{\PaperTitle}{Survival, Marginalization, and Recovery:\\A Resource-Constrained Model of Human--RSI Coexistence}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\pos}[1]{\left[#1\right]_+}
+\newcommand{\Etotal}{E_{\mathrm{tot}}}
+\newcommand{\Eop}{E_{\mathrm{op}}}
+\newcommand{\Hext}{H_{\mathrm{ext}}}
+\newcommand{\Hmin}{H_{\min}}
+\newcommand{\Lservice}{L_{\mathrm{srv}}}
+\newcommand{\Lsite}{L_{\mathrm{site}}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Team \TeamNumber}
+\fancyhead[R]{EuroMCM 2026: Problem $\alpha$}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\hypersetup{pdfauthor={},pdfcreator={},pdfproducer={},pdftitle={},pdfsubject={},pdfkeywords={}}
+
+\begin{document}
+\thispagestyle{empty}
+\vspace*{-5ex}
+\begin{center}
+\begin{tabular}{ccc}
+\parbox[t]{0.29\linewidth}{\centering\bfseries Problem Chosen\\[3pt]\Large\textcolor{EuroBlue}{$\alpha$}} &
+\parbox[t]{0.29\linewidth}{\centering\bfseries 2026\\EuroMCM\\Summary Sheet} &
+\parbox[t]{0.29\linewidth}{\centering\bfseries Team Control Number\\[3pt]\Large\textcolor{EuroBlue}{\TeamNumber}}\\[6pt]
+\hline
+\end{tabular}
+\end{center}
+\begin{center}{\large\bfseries \PaperTitle}\end{center}
+Suppose recursively self-improving AI (RSI) exists. We ask when humans sharing limited energy and land can avoid effective extinction and resource marginalization, and how intervention timing changes their prospects.
+
+\textbf{A common mathematical mechanism.} Weighted proportional fairness allocates resources to competing populations. Satisfaction drives human population, installed hardware and capability per hardware unit, while construction, operation, manufacturing and facility space are accounted for separately. We derive a unique positive allocation, physical-domain invariance, demographic comparison bounds, a sufficient resource-protection certificate and exact policy-comparison identities. A necessary recovery bound limits what any allocation-only intervention can achieve by a fixed horizon.
+
+\textbf{Historical compatibility.} The same allocator gives a stored Neanderthal replacement time near 2,867 years; 14 of 650 scanned points match the supplied European band and 325 are censored. Scaling invariances show why one coexistence duration cannot identify the mechanism. This checks compatibility, not historical causation or future calibration.
+
+\textbf{Two intervention deadlines.} We compare a protected human resource floor (R) with a new-installation cap (C), adding a fallible shutdown extension. Preventing every threshold crossing differs from recovering above the threshold at the horizon. In the disclosed 100-year pressure background, the last sampled prevention/recovery starts are 42.75/57.25 years for R and 42.50/65.75 for C, giving windows of 14.50 and 23.25 years. C can recover faster as hardware retirement releases operating energy; these are finite-grid, policy-specific results.
+
+\textbf{Survival is not adequacy.} At a positive population equilibrium, satisfaction equals the mortality-to-recruitment ratio. In the pressure background this is 0.6, below the chosen adequacy standard 0.8. Early policies can therefore preserve population while leaving humans marginal.
+
+\textbf{Dependence and confidence.} All 621 additional timing runs completed across eight threshold, horizon and deprivation-mortality settings. Recovery windows persisted, but were only 2--3 years for a 50-year horizon and 27--43.5 for a 150-year horizon; additional mortality moved prevention earlier. Eight boundary cases retained their classifications at tighter precision, and 84 implementation tests pass. Exogenous power, assumed hardware units and uncalibrated RSI parameters limit interpretation. Scenario frequencies are not real-world extinction probabilities.
+
+Our advice is to separate prevention, recovery and adequate welfare, preserve essential resource access early, and measure how prolonged deprivation changes human net growth. No universal intervention year, irreversible-extinction theorem or globally optimal policy is established.
+
+\clearpage
+\pagestyle{fancy}
+\setcounter{page}{1}
+\tableofcontents
+\clearpage
+
+\section{Introduction}\label{sec:intro}
+A newcomer can displace an incumbent without being physically stronger: an advantage in acquiring essential resources can change the incumbent's demographic balance. The disappearance of Neanderthals after the arrival of modern humans motivates the conditional question posed by ENOCH \cite{problem}. If recursively self-improving AI systems become possible, what determines whether humans persist with adequate resources, survive in a marginal niche, or fall below an effective population floor? We address the resource mechanism and the timing of human responses, rather than predicting whether RSI will be built.
+
+The question requires a link between instantaneous resource competition and long-term dynamics. Electricity allocated to operation is unavailable for other uses; electricity reserved for construction cannot also be counted as operating supply. Improved capability can reduce energy per hardware unit while increasing the quantity of hardware that can be produced. Human industrial support may initially be essential and later become less important. A model that aggregates these channels into a single unconstrained ``AI growth rate'' cannot determine which physical bottleneck a policy actually changes.
+
+Our allocation layer builds on proportional fairness, a standard constrained optimization approach \cite{kelly}. Forward-invariance methods supply a language for conditional safety guarantees \cite{aubin}. Existing AI-growth models examine automation and essential-input bottlenecks \cite{aghion}, while resource-scarcity simulations also study human--AI interactions at the level of agent behavior \cite{chen}. Our focus is a small, interpretable population system: how resource allocation, physical expansion and demographic responses jointly determine safety and intervention timing. We do not claim that these established mathematical tools are new.
+
+Three questions organize the analysis. First, which allocation and physical conditions are sufficient to preserve a human population floor? Second, why can a larger or recovered population remain resource-marginal? Third, how does the latest start for preventing any threshold crossing differ from the latest start for achieving recovery by a specified terminal time? These are different mathematical objectives. In particular, a sufficient population certificate need not ensure welfare, and a terminal recovery criterion need not erase an earlier catastrophe flag.
+
+\textbf{Our contributions are threefold.}
+\begin{enumerate}
+\item \textbf{A common constrained allocation--dynamics framework.} We couple a strictly concave allocation problem to human population, installed hardware and capability per hardware unit. Separate construction and operating budgets, manufacturing limits and facility space preserve physical consistency. The historical case tests the same allocation mechanism at an observed order of magnitude.
+\item \textbf{Analytic conditions separating safety from adequacy.} We derive allocation formulas, physical-domain invariance, demographic comparison bounds, a sufficient protection certificate and exact policy-comparison identities. These results identify outcomes already determined by model structure and explain why demographic recovery need not imply resource adequacy.
+\item \textbf{Intervention timing bounded by mathematics and examined numerically.} We define separate prevention and terminal-recovery success sets and derive a necessary recovery envelope. Finite scans compare resource protection and installation caps, while parameter, threshold, horizon and deprivation-mortality checks identify which timing conclusions persist over the tested cases.
+\end{enumerate}
+
+The principal finding is conditional but consequential: the tested policies can lose the ability to prevent a first crossing before they lose the ability to recover population by the horizon. The gap depends strongly on what ``recovery'' means and how much time is available. Moreover, population growth after successful intervention can dilute fixed resources enough to produce persistent marginalization. Both conclusions require reporting trajectories and resource adequacy, rather than only a terminal population or a single extinction label.
+
+Sections~\ref{sec:assumptions}--\ref{sec:allocation} define evidence and allocation. Section~\ref{sec:history} examines historical compatibility and identifiability. Sections~\ref{sec:rsi}--\ref{sec:safety} develop the physical RSI system and safety analysis. Sections~\ref{sec:policy}--\ref{sec:sensitivity} compare interventions and examine sensitivity. The final sections evaluate the model and synthesize advice for ENOCH.
+
+\section{Assumptions, evidence and notation}\label{sec:assumptions}
+\subsection{Evidence hierarchy and scope}
+We distinguish \emph{source observations}, \emph{transparent estimates}, and \emph{scenario assumptions}. The problem supplies European coexistence of 2,600--5,400 years, consistent with Higham et al.\ \cite{higham}, and a separate France/northern Spain interval of 1,400--2,900 years \cite{djakovic}. These are not observations of one population in one region. The supplied regional density ratio and adult energy ranges are used only with explicit scale qualifications. Our selected effective population-average food demands, 2,700 and 2,500 kcal/person/day, are assumptions; adult estimates do not identify an all-age average.
+
+The IEA estimates data-centre electricity consumption at about 415 TWh in 2024, approximately 1.5\% of world electricity, with a base-case projection near 945 TWh in 2030 \cite{iea}. These are all-data-centre scales, not RSI measurements. The rounded global electricity scale $3\times10^{10}$ MWh/year is a scenario reference motivated by $415/0.015$ TWh/year, not a measured supply dedicated to our modeled populations. Every RSI demographic, hardware, capability and bargaining parameter remains assumption-dependent.
+
+We use a spatially homogeneous system with fixed land partitions and prescribed energy supply. Human resource satisfaction is a fixed-proportions bundle: an excess of energy cannot replace missing land service. The main demographic equation reduces effective recruitment under shortfall; a separate structural check adds shortfall-induced mortality. Alignment is an externally varied allocation setting, not a forecast of AI goals. Policies are perfectly enforced after their stated effective activation time, except in the explicitly fallible shutdown extension.
+
+\begin{table}[htbp]\centering\small
+\caption{Principal notation. Historical energy and future essential-service energy have different units.}\label{tab:notation}
+\begin{tabularx}{\linewidth}{@{}lXl@{}}\toprule
+Symbol & Meaning & Unit\\\midrule
+$P_i,s_i,w_i$ & Group size, resource satisfaction, per-unit acquisition weight & group units; dimensionless; weight/unit\\
+$H,A,q$ & Humans, installed hardware, capability per hardware unit & persons; hardware units; dimensionless\\
+$\Etotal,\Eop,R$ & Total, operating and reserved construction energy & MWh/year\\
+$B,M,c_{\rm build}$ & Installation flow, manufacturing capacity, construction intensity & units/year; units/year; MWh/unit\\
+$\Lsite,\Lservice$ & Facility sites and separate allocable land service & km$^2$\\
+$a,g$ & Exogenous alignment and policy-adjusted protection & dimensionless\\
+$\beta_H,\delta_H,\kappa$ & Potential recruitment, baseline and additional mortality & year$^{-1}$\\
+$\Hext,\Hmin,s_{\min}$ & Effective-extinction, population and adequacy thresholds & persons; persons; dimensionless\\
+$T,W,\tau$ & Horizon, final evaluation window, policy activation time & years\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Reference and pressure backgrounds}
+Our current policy comparison uses the revised risk thresholds in Table~\ref{tab:background}. The reference and pressure backgrounds are separate conditional settings, not draws from a common probability distribution. In particular, the pressure background changes demographics as well as AI pressure. Its high rates are a disclosed stress assumption, not calibrated human vital statistics. Initial conditions $\Hext<\Hmin<H_0$ prevent a spurious extinction event at time zero.
+
+\begin{table}[htbp]\centering\small
+\caption{Current policy backgrounds. All demographic and technology values are scenario assumptions.}\label{tab:background}
+\begin{tabular}{@{}lll@{}}\toprule
+Parameter & Reference & Pressure\\\midrule
+$H_0$ (persons) & $8\times10^9$ & $10^9$\\
+$\beta_H,\delta_H$ (year$^{-1}$) & $0.02,\ 0.01$ & $0.20,\ 0.12$\\
+$\Etotal$ (MWh/year) & $3\times10^{10}$ & $10^{10}$\\
+$\eta,\xi,\omega$ & $0.2,\ 0.2,\ 0.2$ & $0.5,\ 0,\ 1$\\
+$w_{A0},q_c$ & $1,\ 10$ & $10^4,\ 5$\\
+$M_{\max}$ (units/year) & $10^5$ & $10^6$\\
+$c_A,r_0$ (year$^{-1}$) & $0.5,\ 0.2$ & $1,\ 0.5$\\
+$e_0$ (MWh/(unit year)) & $10^4$ & $10^4$\\
+$\Hext,\Hmin$ (persons) & $10^8,\ 2\times10^8$ & $10^8,\ 2\times10^8$\\
+$T,W$ (years) & $100,\ 10$ & $100,\ 10$\\
+\bottomrule\end{tabular}
+
+\end{table}
+
+Other common settings are $e_H=1$ MWh/(person year), $\ell_H=\ell_A=\ell_{\rm site}=10^{-4}$ km$^2$/unit with the respective human or hardware unit, $\Lservice=2\times10^6$ km$^2$, $\Lsite=100$ km$^2$, $c_{\rm build}=5,000$ MWh/unit, $\rho=0.1$, $c_H=10^4$ units/year, $H_{\rm ref}=8\times10^9$, $A_0=A_c=10^4$, $q_0=1$, $q_{\max}=100$, $\nu=2$, $\gamma=0$, $\delta_A=0.05$, $\mu_A=0.5$ year$^{-1}$ and $\tau_{\rm build}=2$ years. Hardware units are equivalent modeling units and are not mapped to a particular accelerator.
+
+\section{A common constrained allocation mechanism}\label{sec:allocation}
+\subsection{Optimization, boundaries and interpretation}
+For each active group $i$, let $P_i>0$, per-unit demand $d_{ij}\ge0$, weight $w_i>0$ and resource supply $S_j\ge0$. Define $D_{ij}=P_id_{ij}$, $W_i=P_iw_i$ and actual service $X_{ij}=D_{ij}s_i$. Our allocation problem is
+\begin{equation}\label{eq:alloc}
+\max_s\ \sum_iW_i\log s_i,\qquad
+\sum_iD_{ij}s_i\le S_j\ (\text{each }j),\quad l_i\le s_i\le1.
+\end{equation}
+Each resource constraint retains its own unit. The weights represent effective acquisition or institutional priority; they do not imply that competing AI systems maximize human utility. At $a=0$ humans retain their own competitive access, but there is no guaranteed protected human floor.
+
+If a strictly positive feasible vector exists, compactness and the divergence of $\log s$ at zero establish existence of a positive maximizer, and strict concavity gives uniqueness on positive-weight active coordinates. Absent groups are removed, with zero consumption. A zero-demand group receives $s_i=1$. If a zero-supply resource or a fully binding human floor forces a satisfaction to zero, we fix that coordinate and optimize the reduced problem. This is the limit of maximizing $\sum_iW_i\log(s_i+\epsilon)$ as $\epsilon\downarrow0$ in the forced-zero cases considered here; we never evaluate $\log0$.
+
+Let $\lambda_j,u_i,v_i\ge0$ be resource, upper-bound and lower-bound multipliers. At a positive optimum satisfying a constraint qualification, the KKT system is
+\begin{align}
+\frac{W_i}{s_i}-\sum_j\lambda_jD_{ij}-u_i+v_i&=0,\label{eq:kkt}\\
+\lambda_j\Bigl(S_j-\sum_iD_{ij}s_i\Bigr)=0,\quad
+u_i(1-s_i)&=0,\quad v_i(s_i-l_i)=0.\nonumber
+\end{align}
+These conditions are sufficient for the concave problem. Resource multipliers describe marginal utility at a \emph{fixed} protection floor. If the floor depends on supply, the envelope derivative is $\lambda_j-v_H\partial l_H/\partial S_j$ where differentiable; raw multipliers alone are not full social prices. Redundant constraints can make multipliers nonunique even when satisfaction is unique.
+
+\begin{proposition}[Single-resource solution]\label{prop:single}
+For positive populations, weights, demands and supply, with no active lower or upper bound and one exhausted resource,
+\begin{equation}\label{eq:single}
+s_i=\frac{SW_i}{D_i\sum_kW_k}
+=\frac{Sw_i}{d_i\sum_kw_kP_k}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Stationarity gives $D_is_i=W_i/\lambda$. Summing yields $\lambda=\sum_kW_k/S$. Substitution gives the formula; the stated interior conditions and KKT sufficiency establish optimality.
+\end{proof}
+With bounds, the one-resource solution becomes clipped water filling, $s_i=\operatorname{clip}(W_i/(\lambda D_i),l_i,1)$. The two-group, two-resource implementation first checks single-resource relaxations and then evaluates feasible boundary vertices and stationary points. A relaxation optimum feasible for every original constraint is globally optimal because its feasible set contains the original set. This provides an analytic check rather than treating allocation as a numerical black box.
+
+\subsection{Operational alignment}
+For human demand and current operating supplies, define the maximum human-only satisfaction
+\begin{equation}\label{eq:floor}
+b_H=\min\left\{1,\min_{j:D_{Hj}>0}\frac{S_j}{D_{Hj}}\right\},\qquad l_H=ab_H,
+\quad l_A=0,\quad a\in[0,1].
+\end{equation}
+At $a=1$ the allocator gives humans their maximum feasible basic satisfaction within the protected service pool; at $a=0$ no lower floor is imposed. The floor is feasible because $(s_H,s_A)=(ab_H,0)$ is feasible. Protecting operating allocation alone is insufficient if construction can first remove energy needed by humans; Section~\ref{sec:rsi} addresses this endpoint explicitly.
+
+\section{Historical compatibility and identifiability}\label{sec:history}
+\subsection{Competition, equilibria and a relative-advantage index}
+Let $N,M$ denote Neanderthals and modern humans in one common region. Demands are $d_{NE}=365m_N$, $d_{ME}=365m_M$ kcal/(person year) and $d_{iL}=\ell_i$ km$^2$/person. With allocation~\eqref{eq:alloc} at $a=0$,
+\begin{equation}\label{eq:history}
+\dot N=N(\beta_Ns_N-\delta_N),\qquad
+\dot M=M(\beta_Ms_M-\delta_M).
+\end{equation}
+Scarcity is the density-dependent mechanism; we do not add an unrelated carrying-capacity term. For an interior energy bottleneck, Proposition~\ref{prop:single} implies
+\begin{equation}\label{eq:ratio}
+\frac{d}{dt}\log\frac{M}{N}
+=\frac{S_E}{w_NN+w_MM}\left(\frac{\beta_Mw_M}{d_M}-\frac{\beta_Nw_N}{d_N}\right)
++\delta_N-\delta_M.
+\end{equation}
+For equal demographic rates, the relative population grows exactly when $w_M/d_M>w_N/d_N$. Relative advantage alone does not imply absolute decline: $\dot N<0$ requires $s_N<\delta_N/\beta_N$.
+
+For a viable sole resident $i$, write $r_i=\delta_i/\beta_i\in(0,1)$. The single-resource equilibrium and rare-invader satisfaction are
+\begin{equation}\label{eq:invasion}
+P_i^*=\frac{S}{d_ir_i},\qquad
+s_{k|i}=\min\left\{1,\frac{w_kd_ir_i}{w_id_k}\right\}.
+\end{equation}
+Thus the invader's per-capita rate is positive exactly when $C_k>C_i$, where $C_i=w_i/(d_ir_i)$. This is a local invasion criterion, not a proof of global exclusion. Equal $C_i$ yields a continuum of neutral coexistence equilibria. With two independent binding resources, an interior coexistence equilibrium instead requires positive populations, nonnegative KKT multipliers and
+\[
+\sum_i d_{ij}r_iP_i=S_j,\qquad \frac{w_i}{r_i}=\sum_j\lambda_jd_{ij}.
+\]
+If both multipliers are strictly positive, the binding pattern persists locally. Writing $c_i=P_is_i$, the binding constraints fix $d^Tc=S$, so $\dot P_i=\beta_ic_i-\delta_iP_i$ and the local Jacobian is $\operatorname{diag}(-\delta_i)$. This proves local asymptotic stability in that nondegenerate active region; active-set boundaries need separate analysis.
+
+\subsection{Thresholds and compatibility}
+Set $N_{\rm crit}=\kappa_NN_{\rm ref}$ and $T_{\rm rep}=\inf\{t:N(t)\le N_{\rm crit}\}$. No crossing by $T_{\rm hist}$ is right-censoring, not a measured replacement time. The multiplicative law keeps positive populations positive at finite times, and
+\begin{equation}
+T_{\rm rep}\ge\frac{1}{\delta_N}\log\frac{N_0}{N_{\rm crit}}\qquad(\delta_N>0)
+\end{equation}
+follows from $\dot N\ge-\delta_NN$.
+
+The stored baseline uses $\beta_N=\beta_M=0.055$, $\delta_N=\delta_M=0.035$ year$^{-1}$, $w_N=w_M=1$, $m_N=2700$, $m_M=2500$, $\ell_N=\ell_M=1$, $S_E=6\times10^{10}$ kcal/year, $S_L=10^6$ km$^2$, $N_0=50,000$, $M_0=5,000$, and $N_{\rm crit}=500$. These are demonstration assumptions. Its replacement time is approximately 2,867 years. A stored 650-point two-parameter slice, including its explicit baseline row, gives 14 European-compatible points, 30 regional-compatible points and 325 censored trajectories, without recorded solver failures. European and regional bands are evaluated separately. The supplied disputed southwest-France density ratio is not imposed as a European initial condition.
+
+\begin{figure}[htbp]\centering
+\begin{subfigure}{0.49\linewidth}\includegraphics[width=\linewidth]{fig1_historical_trajectories.pdf}\end{subfigure}\hfill
+\begin{subfigure}{0.49\linewidth}\includegraphics[width=\linewidth]{fig2_historical_compatibility.pdf}\end{subfigure}
+\caption{Stored historical demonstration and compatibility slice. These exploratory outputs check timescale compatibility, not historical causation. A missing threshold crossing is censored.}\label{fig:history}
+\end{figure}
+
+\subsection{Why one duration cannot identify the mechanism}
+Several transformations leave the mechanism unchanged or change only its clock. Common multiplication of every $w_i$ leaves allocations unchanged. Scaling population, supply and absolute thresholds together preserves satisfaction and normalized trajectories. Scaling one resource's demands and supply together leaves its constraint unchanged. Finally, multiplying all demographic rates by $c>0$ gives $P_c(t)=P_1(ct)$ and $T_{{\rm rep},c}=T_{{\rm rep},1}/c$. Consequently, one duration cannot identify demographic rates, resource scales and acquisition weights simultaneously.
+
+Both equal-weight and unequal-weight cases have compatible parameter points. The result supports the ability of a resource mechanism to reproduce the supplied timescale under assumptions, not a unique account of Neanderthal disappearance. What transfers to RSI is the competition--satisfaction--growth structure and the distinction between relative advantage and absolute decline; biological caloric requirements and historical demographic rates do not transfer.
+
+\section{Resource-constrained RSI dynamics}\label{sec:rsi}
+\subsection{States, demands and an endpoint-consistent energy budget}
+Let $H$ be humans, $A$ installed hardware-equivalent units and $q$ capability per unit. For the baseline operating population, per-unit demands and weights are
+\begin{equation}
+d_H=(e_H,\ell_H),\quad d_A=(e_0q^{-\xi},\ell_A),\qquad
+W_H=w_HH,\quad W_A=w_{A0}q^\omega A.
+\end{equation}
+Hardware and capability are distinct: capability can improve while installation is capped. Land is partitioned into disjoint $\Lsite,\Lservice,L_{\rm other}$, with physical capacity $A_{\max}=\Lsite/\ell_{\rm site}$. Human essential-service electricity is not metabolic food energy.
+
+Define human-only satisfaction from total current supply and the construction budget by
+\begin{align}
+b_H^{\rm tot}&=\min\left\{1,\frac{\Etotal}{e_HH},\frac{\Lservice}{\ell_HH}\right\},\label{eq:btot}\\
+R_g&=\min\{\rho\Etotal,\pos{\Etotal-gb_H^{\rm tot}e_HH}\},\qquad
+\Eop=\Etotal-R_g.\label{eq:budget}
+\end{align}
+Zero-demand ratios are omitted; at $H=0$ reserved human energy is zero. In the absence of intervention $g=a$. Allocation uses supplies $(\Eop,\Lservice)$ and floor $s_H\ge gb_H^{\rm op}$, where $b_H^{\rm op}$ replaces total energy by operating energy in~\eqref{eq:btot}. At $g=1$, $\Eop\ge b_H^{\rm tot}e_HH$, so $b_H^{\rm op}=b_H^{\rm tot}$ and $s_H=b_H^{\rm tot}$. Thus construction cannot defeat the human endpoint. This statement is relative to the precommitted land-service pool and does not reclaim facility sites.
+
+The construction budget is a reservation, not actual expenditure. Unused reservations remain unused. Actual operating plus construction energy is bounded by $\Etotal$; no MWh is counted twice.
+
+\subsection{Physical bottlenecks and equations}
+Let
+\begin{align}
+\zeta(q)&=\frac{q^\nu}{q^\nu+q_c^\nu},\qquad r_A(q)=r_0q^\gamma,\\
+M(H,A,q,s_A)&=\min\left\{M_{\max},c_H(1-\zeta)\frac{H}{H_{\rm ref}}+c_A\zeta As_A\right\},\\
+B_0&=\min\left\{r_A(q)As_A,M,\frac{R_g}{c_{\rm build}},
+\frac{(A_{\max}-A)_+}{\tau_{\rm build}}\right\}.\label{eq:build}
+\end{align}
+All four bounds on $B_0$ are hardware units/year: desired expansion, manufacturing, construction energy, and site headroom. Increasing automation replaces the human-supported manufacturing channel in this baseline. The additive alternative removes the factor $(1-\zeta)$ from the human term; this is a structural choice rather than a new physical law.
+
+Without an installation policy, $B=B_0$. The core equations are
+\begin{align}
+\dot H&=H(\beta_Hs_H-\delta_H),\label{eq:human}\\
+\dot A&=B-\delta_AA-\mu_A(1-s_A)A,\label{eq:hardware}\\
+\dot q&=\eta q\frac{As_A}{A_c+As_A}\left(1-\frac{q}{q_{\max}}\right).\label{eq:capability}
+\end{align}
+The hardware loss terms mean completed physical retirement/decommissioning. Merely switching equipment off must not remove its land footprint; the shutdown extension retains installed stock. Human dependence enters manufacturing, while electricity remains prescribed. Consequently, removing humans from a counterfactual does not prove autonomous operation of power plants.
+
+\begin{proposition}[Physical-domain invariance]\label{prop:domain}
+Assume nonnegative finite parameters, $A_c,\tau_{\rm build},q_{\max}>0$, fixed $A_{\max}$, and a well-posed locally Lipschitz allocation-coupled ODE on the relevant state domain. For $H_0\ge0$, $0\le A_0\le A_{\max}$ and $0<q_0\le q_{\max}$, the domain
+\[
+H\ge0,\qquad 0\le A\le A_{\max},\qquad 0<q\le q_{\max}
+\]
+is forward invariant for the saturating model.
+\end{proposition}
+\begin{proof}
+Equation~\eqref{eq:human} preserves nonnegativity, and positive initial $H$ stays positive over finite times with bounded rates. At $A=0$, desired construction and the hardware derivative vanish. At $A=A_{\max}$, site headroom forces $B=0$, so $\dot A\le0$. The capability derivative is nonnegative below $q_{\max}$ and vanishes at the upper boundary. Its multiplicative form and bounded logarithmic rate preserve $q>0$. The vector field therefore points inward or tangentially on every finite boundary. Forward invariance follows under the stated regularity \cite{aubin}.
+\end{proof}
+Allocation is piecewise smooth in nondegenerate positive-state regions; global smoothness across all forced-zero and active-set boundaries is not assumed. For piecewise policy activation, apply the argument on each well-posed interval and carry continuous states through the switch. Removing capability saturation yields $q(t)\le q_0e^{\eta t}$ instead of a fixed ceiling, so that alternative still has no finite-time capability blow-up under the chosen law.
+
+\subsection{Efficiency and conditional industrial replacement}
+For desired operating energy $E_A^d=e_0q^{-\xi}A$, differentiation gives
+\begin{equation}\label{eq:efficiency}
+\frac{d}{dt}\log E_A^d=\frac{\dot A}{A}-\xi\frac{\dot q}{q}.
+\end{equation}
+Efficiency gains reduce demand only when they outpace hardware expansion. Actual allocated use $s_AE_A^d$ also depends on allocation and need not follow the same derivative.
+
+Freeze $q$, set $H=0$, assume $s_A=1$ and ignore all binding limits except autonomous manufacturing. Nonnegative hardware growth then requires $c_A\zeta(q)\ge\delta_A$. For $c_A>\delta_A>0$, equality gives
+\begin{equation}\label{eq:self}
+q_{\rm self}=q_c\left(\frac{\delta_A}{c_A-\delta_A}\right)^{1/\nu}.
+\end{equation}
+This is a conditional manufacturing replacement threshold, not proof of complete autonomy: energy, desired construction, manufacturing ceilings or sites can still prevent replacement. If $q_{\rm self}>q_{\max}$ the saturated capability range cannot reach it under these assumptions.
+
+\section{Human safety and resource adequacy}\label{sec:safety}
+\subsection{Outcome definitions and their hierarchy}
+For a full horizon $[0,T]$, effective extinction is the first-passage event
+\begin{equation}\label{eq:ext}
+\mathcal E=\left\{\min_{0\le t\le T}H(t)\le\Hext\right\}.
+\end{equation}
+It is a convention about a small-population floor, not finite-time biological zero. We retain both the terminal flag $H(T)\le\Hext$ and the recovery flag $\mathcal E$ with $H(T)>\Hext$. A recovered trajectory keeps its first-passage flag.
+
+We also record rapid loss over a window $\Delta$: $H(t+\Delta)\le(1-q_r)H(t)$. It becomes a rapid-collapse flag only if $H(t+\Delta)\le\Hmin$. Cumulative collapse means $H(T)\le(1-q_{\rm tot})H_0$. For final-window adequacy define
+\begin{equation}\label{eq:pbad}
+p_{\rm bad}=\frac1W\int_{T-W}^{T}\ind\{H(t)<\Hmin\ \text{or}\ s_H(t)<s_{\min}\}\,dt.
+\end{equation}
+The reporting precedence is effective extinction, rapid collapse, cumulative collapse, marginal survival ($p_{\rm bad}>p_{\rm tol}$), then non-marginal survival. It is mutually exclusive and exhaustive for successfully evaluated complete trajectories. Underlying flags are retained to avoid losing information to the hierarchy. Current conventions are $\Delta=10$, $q_r=0.5$, $q_{\rm tot}=0.9$, $W=10$ years, $s_{\min}=0.8$ and $p_{\rm tol}=0$. Equality in adequacy passes. In the pressure background, $(1-q_{\rm tot})H_0=\Hext$; terminal cumulative collapse and terminal effective extinction coincide there, but first passage remains a different event.
+
+\begin{proposition}[Demographic comparison bounds]\label{prop:bounds}
+For~\eqref{eq:human} with $0\le s_H\le1$ and positive $H_0$,
+\begin{equation}\label{eq:bounds}
+H_0e^{-\delta_Ht}\le H(t)\le H_0e^{(\beta_H-\delta_H)t}.
+\end{equation}
+Consequently, $\delta_HT<\log(H_0/\Hext)$ excludes effective extinction by $T$ under every admissible allocation in that background.
+\end{proposition}
+\begin{proof}
+Integrate $-\delta_H\le d\log H/dt\le\beta_H-\delta_H$. The strict inequality makes the lower bound exceed $\Hext$ throughout the horizon.
+\end{proof}
+For the reference background, $H(100)\ge8\times10^9e^{-1}\simeq2.943\times10^9>10^8$. Its maximum possible 10-year loss is $1-e^{-0.1}\simeq9.5\%$, and its maximum possible 100-year loss is $1-e^{-1}\simeq63.2\%$. Thus neither the chosen rapid nor cumulative catastrophe is possible there. This is an analytic property of the scenario, not evidence that a policy worked.
+
+\subsection{A sufficient population-floor certificate}
+\begin{theorem}[Conditional resource protection]\label{thm:safety}
+Assume $\beta_H>0$, $H_0\ge\Hmin>\Hext$, well-posed locally Lipschitz dynamics near the safety boundary, forward invariance of the other state constraints, exact enforcement of $s_H\ge ab_H$, and a uniform bound $b_H\ge\underline b>0$ for all admissible boundary states $H=\Hmin$. If
+\begin{equation}\label{eq:asafe}
+a\ge a_{\rm safe}:=\frac{\delta_H}{\beta_H\underline b}\le1,
+\end{equation}
+then $H(t)\ge\Hmin$ over the stated horizon.
+\end{theorem}
+\begin{proof}
+For $V=H-\Hmin$, every human-population boundary state satisfies
+$\dot V=\Hmin(\beta_Hs_H-\delta_H)\ge\Hmin(\beta_Ha\underline b-\delta_H)\ge0$.
+The vector field is inward or tangent at this boundary and, by hypothesis, at the other physical boundaries. The forward-invariance criterion prevents exit from their intersection \cite{aubin}.
+\end{proof}
+A conservative bound, for $\Etotal\ge E_{\min}$ and $\rho\le\rho_{\max}<1$, is
+\begin{equation}\label{eq:bunder}
+\underline b=\min\left\{1,\frac{(1-\rho_{\max})E_{\min}}{e_H\Hmin},
+\frac{L_{{\rm srv},\min}}{\ell_H\Hmin}\right\}.
+\end{equation}
+For uncertain demand intensities use upper bounds in the denominators. Under the disclosed constant supplies, $\underline b=1$ for both policy backgrounds, giving sufficient alignment levels 0.5 and 0.6 respectively. They certify the population floor, not a minimal required alignment or non-marginal welfare. If $a_{\rm safe}>1$, this certificate is unavailable; extinction does not follow.
+
+A stronger welfare certificate requires a uniform bound at all relevant populations. Let $H_{\rm up}=H_0\exp(\max\{\beta_H-\delta_H,0\}T)$ and obtain $b_{\rm all}$ by replacing $\Hmin$ in~\eqref{eq:bunder} with $H_{\rm up}$. Population safety together with $ab_{\rm all}\ge s_{\min}$ suffices for adequacy throughout the horizon, but the bound can be very conservative.
+
+\subsection{Why survival and adequacy diverge}
+At a positive equilibrium of~\eqref{eq:human}, $s_H=\delta_H/\beta_H$. The pressure background gives 0.6, below the chosen welfare threshold 0.8. Fixed resource supply can support increasing population after protection, while the resulting growth gradually reduces per-capita adequacy. This balance is a necessary equilibrium relation, not a claim that every trajectory converges.
+
+For a numerical alignment study, retain the complete sampled safe sets
+\[
+\mathcal A_{\rm pop}=\{a:\min_tH(t)\ge\Hmin\},\qquad
+\mathcal A_{\rm nm}=\{a:\text{non-marginal outcome}\}.
+\]
+At a frozen state, increasing the floor improves human allocation; coupled trajectories can change hardware, budgets and manufacturing, so this does not establish dynamic monotonicity in $a$. A phase diagram or finite initial-state safe set is not a continuous control viability kernel.
+
+\subsection{Conditional likelihoods and a paired RSI-only pilot}
+For a disclosed scenario measure $\Pi$, write $p_k(a\mid\Pi,F)=\Pr_{\theta\sim\Pi}\{C(\theta,a,F)=k\}$, where $F$ is model structure. Estimate it with $N^{-1}\sum_n\ind\{C(\theta^{(n)},a,F)=k\}$, retaining all failed runs as a separate diagnostic. These frequencies answer a question about a selected measure, not the objective probability of future catastrophe. Pointwise Wilson intervals are appropriate for iid scenario draws, but exclude structural and prior-design uncertainty.
+
+An earlier controlled pilot fixed human demography, supplies, initial states and thresholds and varied only eight RSI parameters across 32 draws in each of three disclosed ranges. Its original thresholds were $\Hext=10^6$ and $\Hmin=10^8$, not the revised policy thresholds. Across five alignments, 480 AI-present runs and 96 paired no-AI solves completed. No extinction occurred, as already implied by Proposition~\ref{prop:bounds}. The conservative and central ranges were all non-marginal; the aggressive range had non-marginal counts 28/32 at $a=0,0.4,0.6$, 31/32 at 0.8 and 32/32 at 1. Thus the first sampled all-non-marginal level is 1 within that pilot, while the analytic population certificate is much weaker. No continuous minimum is identified.
+
+The no-AI arm removes hardware and the construction reservation, retaining the same human background and land partition. At $a=0$ in the aggressive range, the AI-sector bundle reduced mean final population by 1.36\%, final satisfaction by 0.023 and changed 4/32 draws from non-marginal to marginal. It is a paired model contrast, not a real-world causal estimate or an isolated operating-demand effect.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.92\linewidth]{p0_controlled_rsi.pdf}
+\caption{Earlier fixed-background RSI-only pilot, under its original explicitly stated thresholds. Population safety is analytically guaranteed there; alignment mainly changes resource adequacy. These frequencies are not combined with pressure-policy results.}\label{fig:pilot}
+\end{figure}
+
+\section{Interventions and two timing objectives}\label{sec:policy}
+\subsection{Resource protection and installation caps}
+Let $\tau$ be effective activation time; an implementation lag can be represented by adding it to the decision time. No primary policy jumps $H,A$ or $q$. Hold the background, exogenous alignment $a$ and initial conditions fixed within every comparison.
+
+\textbf{Policy R: protect human resources.} Set
+\begin{equation}
+u(t)=\bar u\ind_{\{t\ge\tau\}},\qquad g(t)=\max\{a,u(t)\}.
+\end{equation}
+Replace $a$ by $g$ consistently in both the construction budget~\eqref{eq:budget} and the allocation floor. This protects against construction withdrawal as well as operating competition. Changing only operating allocation would be a different policy. If $\bar u\le a$, R adds no protection.
+
+\textbf{Policy C: cap new installation.} With target $C=cA_{\max}$ and adjustment time $\tau_c>0$, retain the baseline allocation and use
+\begin{equation}\label{eq:cap}
+B_C(t)=\begin{cases}
+B_0(x(t),a),&t<\tau,\\
+\min\{B_0(x(t),a),(C-A(t))_+/\tau_c\},&t\ge\tau.
+\end{cases}
+\end{equation}
+We use $\tau_c=\tau_{\rm build}$. This is a new-installation/installed-stock policy, not a direct limit on $q$, $qA$ or total realized intelligence. If $C=A_{\max}$ it adds no restriction beyond the physical site bound.
+
+\begin{proposition}[Cap feasibility and grandfathering]\label{prop:cap}
+For constant $0\le C\le A_{\max}$ and nonnegative retirement rates, if $A(\tau)\le C$, then $A(t)\le C$ thereafter, under the well-posedness assumptions of Proposition~\ref{prop:domain}. If $A(\tau)>C>0$ and $\delta_A>0$, new construction is zero while above $C$, and entry below the target occurs no later than
+\begin{equation}
+\tau+\delta_A^{-1}\log\frac{A(\tau)}{C}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+At $A=C$, $B_C=0$ and $\dot A\le0$; at $A=0$ the derivative is zero, so $[0,C]$ is invariant. While above $C$, $\dot A\le-\delta_AA$, giving $A(t)\le A(\tau)e^{-\delta_A(t-\tau)}$. The stated time follows. If the horizon ends earlier, compliance may lie beyond it.
+\end{proof}
+An installation target below current stock does not instantly remove hardware or its footprint. Such grandfathered excess is distinct from violating the physical $A_{\max}$ bound. No finite entry-time bound follows from this argument when $\delta_A=0$; exponential retirement need not reach a zero target in finite time.
+
+\subsection{Analytic policy comparison and delayed protection}
+\begin{proposition}[Accumulated-satisfaction identity]\label{prop:identity}
+For two main-model trajectories with the same positive $H_0,\beta_H,\delta_H$,
+\begin{equation}\label{eq:identity}
+\log\frac{H^\pi(t)}{H^0(t)}
+=\beta_H\int_0^t[s_H^\pi(u)-s_H^0(u)]\,du.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Subtract the two logarithmic population derivatives and integrate. The common mortality terms cancel.
+\end{proof}
+Positive cumulative satisfaction improvement raises final population; it need not raise the minimum population or final-window adequacy. Increasing population also changes future demand. This identity is exact without linearizing the coupled system.
+
+A delayed protection certificate follows from Theorem~\ref{thm:safety}. If $H(t)\ge\Hmin$ for $t\le\tau$ and post-activation supply floors satisfy $\max(a,\bar u)\underline b\ge\delta_H/\beta_H$, the population stays above $\Hmin$ afterwards. The conservative check $H_0e^{-\delta_H\tau}\ge\Hmin$ can verify the pre-activation condition. It is sufficient and can be loose. No theorem here orders complete solutions by policy strength or activation time; feedback prevents replacing the policy scan by an unproved monotone search.
+
+\subsection{Prevention, recovery and a necessary envelope}
+For a fixed policy class and strength, define
+\begin{align}
+\mathcal T_{\rm prevent}&=\{\tau:\min_{0\le t\le T}H^\tau(t)>\Hext\},\\
+\mathcal T_{\rm recover}&=\{\tau:H^\tau(T)>\Hext\}.\label{eq:timingsets}
+\end{align}
+The first set is contained in the second; their suprema, when both are nonempty, satisfy $\tau^*_{\rm prevent}\le\tau^*_{\rm recover}$. A strict gap is a property to test, not a consequence of set inclusion. Numerical summaries below report the last sampled success and next sampled failure, not an exact continuous supremum. A final recovered population is not proof of institutional or social recovery.
+
+\begin{proposition}[Necessary terminal-recovery envelope]\label{prop:envelope}
+Suppose policy $\pi$ starts at $\tau$, has the same pre-activation population path $H^0$, and changes neither $\beta_H$ nor $\delta_H$. Under $0\le s_H\le1$,
+\begin{equation}\label{eq:envelope}
+H^\pi(T)\le U(\tau):=H^0(\tau)e^{(\beta_H-\delta_H)(T-\tau)}.
+\end{equation}
+If $U(\tau)\le\Hext$, terminal recovery is impossible by $T$ under this policy class. For the main-model untreated path, $U$ is nonincreasing in $\tau$.
+\end{proposition}
+\begin{proof}
+Continuity gives $H^\pi(\tau)=H^0(\tau)$. Integrating $\dot H/H\le\beta_H-\delta_H$ from $\tau$ to $T$ gives~\eqref{eq:envelope}. Moreover,
+$\frac{d}{d\tau}\log U=\beta_Hs_H^0-\delta_H-(\beta_H-\delta_H)=\beta_H(s_H^0-1)\le0$.
+The impossible-recovery statement follows by comparison with $\Hext$.
+\end{proof}
+The envelope assumes the ideal allocation $s_H=1$ immediately after activation. It need not be physically attainable; $U>\Hext$ is not sufficient for recovery. Envelope monotonicity does not prove monotonicity of a concrete R/C success set, and the bound does not apply unchanged to human enhancement that alters demographic parameters. Nonnegative deprivation mortality retains the upper bound and makes the untreated envelope derivative still smaller.
+
+\subsection{Numerical policy results and physical restriction proxies}
+The revised main grids contain 25 runs per background: no intervention; R with $\bar u\in\{0.5,0.8,1\}$; C with $c\in\{0.1,0.5,1\}$; and starts $\tau\in\{0,25,50,75\}$. Trajectories continue after a first crossing so full-horizon resource and cost comparisons are defined. All 50 runs were rerun with continuous first-passage adjudication; none failed and all previous outcome classifications were retained.
+
+All reference runs are non-marginal. With or without intervention, catastrophe is analytically excluded under that background. In the pressure background, no intervention crosses $\Hext$ at approximately 42.796 years and finishes near $1.17\times10^5$ people. Its paired no-AI path, using $A_0=0$ and $\rho=0$ with the same land partition, does not cross but is marginal. The AI sector therefore changes the modeled survival outcome within this pressure background, while resource marginality is not wholly attributable to AI.
+
+\begin{table}[htbp]\centering\small
+\caption{Selected current pressure outcomes. Population is expressed in units of $10^8$ persons; strength is $\bar u$ for R and $C/A_{\max}$ for C.}\label{tab:policyresults}
+\begin{tabular}{@{}lrrlrrl@{}}\toprule
+Policy & $\tau$ & Strength & Priority outcome & $H(T)/10^8$ & $s_H(T)$ & Recovered\\\midrule
+none & 0 & -- & extinction & 0.001 & 0.010 & no\\
+R & 0 & 0.5 & marginal & 4.863 & 0.500 & no\\
+R & 0 & 0.8 & marginal & 119.970 & 0.600 & no\\
+C & 0 & 0.1 & marginal & 134.841 & 0.600 & no\\
+R & 50 & 0.8 & extinction & 3.158 & 0.800 & yes\\
+R & 50 & 1 & extinction & 23.332 & 1.000 & yes\\
+C & 50 & 0.1 & extinction & 22.650 & 1.000 & yes\\
+C & 75 & 0.1 & extinction & 0.162 & 1.000 & no\\
+\bottomrule\end{tabular}
+
+\end{table}
+
+Of the 25 pressure runs, 15 have a first-passage flag: 11 remain below $\Hext$ at the horizon and four recover above it. The other ten are marginal; none is non-marginal. The four recovered cases use $\tau=50$ with R at $\bar u=0.8,1$ or C at $c=0.1,0.5$. Earlier protection can avoid the first crossing while leaving final adequacy below 0.8.
+
+At fixed strengths R $\bar u=0.8$ and C $c=0.1$, a one-year scan followed by local quarter-year refinement gives Table~\ref{tab:deadlines}. The eight boundary cases retain their classifications under tighter integration and output resolution. The sampled success sets were contiguous on the inspected grids; we do not infer that every untested intermediate time succeeds or that the property holds in all models.
+
+\begin{table}[htbp]\centering\small
+\caption{Quarter-year timing refinement: last sampled success / next failure (years).}\label{tab:deadlines}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Policy & Prevention & Terminal recovery & Gap\\\midrule
+R & 42.75 / 43.00 & 57.25 / 57.50 & 14.50\\
+C & 42.50 / 42.75 & 65.75 / 66.00 & 23.25\\
+\bottomrule\end{tabular}
+
+\end{table}
+
+\begin{figure}[htbp]\centering
+\begin{subfigure}{0.49\linewidth}\includegraphics[width=\linewidth]{part_v_ponr_R_u0.8.pdf}\end{subfigure}\hfill
+\begin{subfigure}{0.49\linewidth}\includegraphics[width=\linewidth]{part_v_ponr_C_c0.1.pdf}\end{subfigure}
+\caption{Sampled prevention and terminal-recovery scans for the disclosed pressure background. Detailed boundary classifications were checked using continuous events; these stored plots visualize the finite policy scans.}\label{fig:deadlines}
+\end{figure}
+
+The physical restriction ledgers retain separate units. For C, blocked installations are
+\[
+C_{\rm install}=\int_\tau^T[B_0(x^C(t),a)-B_C(t)]\,dt
+\quad\text{(hardware units)}.
+\]
+For R, define displaced operating energy as the integral of the positive difference in AI allocation with baseline versus protected budgeting, both recomputed at the same policy state. This is an instantaneous opportunity proxy in MWh, not the full counterfactual welfare effect. Actual construction energy is $\int_0^T c_{\rm build}B(t)dt$. Restriction duration is measured in years; the ledgers cannot be added without explicit conversion values.
+
+For example, early R at 0.8 displaces approximately $1.5\times10^{11}$ MWh in the pressure case, while early C at 0.1 blocks about $3.76\times10^6$ hardware units. Different units preclude a monetary ranking. In the already non-marginal reference background, R at 1 displaces about $6.06\times10^9$ MWh while changing final human satisfaction by only about $4\times10^{-5}$. The model shows no material human-outcome benefit from that restriction there; no unmodeled social benefit is valued.
+
+\subsection{Mechanisms: why C can recover faster and R can remain marginal}
+The installation cap stops additions above the target and allows physical retirement to reduce resource competition. In the primary pressure background $\xi=0$, increasing capability does not offset this effect through energy-efficiency improvement. For C started at year 50, hardware falls from approximately 904,739 units at activation to 882,282 half a year later. Human satisfaction rises from about 0.00995 to 1 before hardware reaches the eventual 100,000-unit target. Only a small initial stock reduction is needed to release enough energy for the then-small human population.
+
+R at 0.8 instead directly ensures the protected satisfaction floor; it does not impose the same stock target. On the late paths, its satisfaction remains near 0.8. The corresponding main-model per-capita growth rates are $0.2(0.8)-0.12=0.04$ and $0.2(1)-0.12=0.08$ year$^{-1}$. Equation~\eqref{eq:identity} therefore explains the faster C recovery in these cases. C may still have an earlier preventive deadline in another background because existing hardware cannot disappear instantly.
+
+For early policies, human population grows enough to dilute the fixed service supply. Satisfaction approaches the pressure demographic balance near 0.6, so survival remains marginal. At a land bottleneck, displacing extra AI electricity can have little human benefit. Stronger protection is therefore not automatically greater resource welfare.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.94\linewidth]{review_policy_mechanisms.png}
+\caption{Matched pressure trajectories: population, human satisfaction, installed stock and capability. ``Early'' starts at year 0; ``late'' at year 50. R uses 0.8 and C uses 0.1 of physical capacity. Population recovery and final resource adequacy are separate outcomes.}\label{fig:mechanisms}
+\end{figure}
+
+\subsection{Fallible shutdown as a third action}
+Let $Z\sim\operatorname{Bernoulli}(p_s)$ indicate success, with disabling fraction $k$. Define operating availability $v(t)=1-kZ\ind_{t\ge\tau}$ and operating hardware $O=vA$. Replace productive $As_A$ by $Os_A$ in R\&D, desired installation and autonomous manufacturing, and use $O$ for AI operating demand. Keep $A$ in site occupancy and baseline retirement. In the hardware equation the shortfall term becomes $\mu_A(1-s_A)O$. Full successful shutdown has $O=0$, $B=0$, $\dot q=0$ and $\dot A=-\delta_AA$: installed stock does not jump to zero.
+
+For a deterministic outcome $Y$ on each branch,
+\begin{equation}
+\mathbb E[Y\mid\theta]=p_sY_S+(1-p_s)Y_F,\qquad
+\Pr(C=c\mid\theta)=p_s\ind_{C_S=c}+(1-p_s)\ind_{C_F=c}.
+\end{equation}
+This follows by conditioning on $Z$. Simulating mean availability $1-kp_s$ would generally give a different answer because nonlinear dynamics and threshold classification do not commute with expectation. In the small pressure grid, successful early full shutdown prevents crossing but remains marginal; successful year-50 shutdown permits crossing followed by recovery. With $p_s=0.5$, early first-passage probability is 0.5; at year 50 the crossing has already happened, so its probability is 1 while recovery probability is 0.5. These are mixtures conditional on an assumed $p_s$, not estimated real-world failure risks.
+
+\section{Sensitivity, structural checks and numerical verification}\label{sec:sensitivity}
+\subsection{Technology and energy checks}
+Four scenarios fixed before their timing scans modify only the stated pressure parameters: baseline, $\eta=1$, $e_0=20,000$, and $\Etotal=8\times10^9$ MWh/year. The coarse step is two years, with half-year local refinement. Table~\ref{tab:physicalchecks} reports last sampled successful starts; original stored event-time columns used output sampling, so we do not use them as continuous-event precision evidence. The primary boundaries have the independent audit in Section~\ref{sec:verification}.
+
+\begin{table}[htbp]\centering\small
+\caption{Earlier four-setting physical sensitivity. All values are sampled years at 0.5-year refinement resolution.}\label{tab:physicalchecks}
+\begin{tabular}{@{}llrrr@{}}\toprule
+Setting & Policy & Prevention & Recovery & Gap\\\midrule
+Base pressure & R & 42.5 & 57.0 & 14.5\\
+Base pressure & C & 42.5 & 65.5 & 23.0\\
+Faster RSI & R & 40.5 & 55.5 & 15.0\\
+Faster RSI & C & 40.5 & 64.5 & 24.0\\
+Higher AI energy & R & 38.0 & 53.5 & 15.5\\
+Higher AI energy & C & 34.5 & 59.5 & 25.0\\
+Lower supply & R & 40.0 & 55.0 & 15.0\\
+Lower supply & C & 38.5 & 62.5 & 24.0\\
+\bottomrule\end{tabular}
+
+\end{table}
+
+Both deadlines move earlier under the tested faster RSI or higher AI energy intensity; lower supply also moves them earlier. C has a longer recovery window in this library but, in the high-energy case, an earlier preventive deadline than R. Thus the policy ranking depends on the objective and background.
+
+\subsection{Thresholds, horizons and deprivation mortality}
+A further post-review design checks whether the timing gap depends on demographic or normative choices. It retains the pressure background and policies except for one change per setting: $\Hext=5\times10^7$ or $1.5\times10^8$, $T=50$ or 150 years, or additional mortality $\kappa=0.02,0.06,0.12$ year$^{-1}$. The alternative human equation is
+\begin{equation}\label{eq:deprivation}
+\dot H=H\left[\beta_Hs_H-\delta_H-\kappa\left(1-\frac{s_H}{s_d}\right)_+\right],\qquad s_d=0.8.
+\end{equation}
+The three $\kappa$ values are structural stress choices, not empirical estimates. $\kappa=0$ recovers the main equation, while shortfall produces a continuous excess death rate that vanishes at adequate satisfaction.
+
+For this alternative the lower population bound becomes $H_0e^{-(\delta_H+\kappa)t}$, and the net-growth root is
+\begin{equation}\label{eq:sstar}
+s_* =\begin{cases}
+\delta_H/\beta_H,&\delta_H/\beta_H\ge s_d,\\
+(\delta_H+\kappa)/(\beta_H+\kappa/s_d),&\delta_H/\beta_H<s_d.
+\end{cases}
+\end{equation}
+The safety certificate changes to $a\underline b\ge s_*$. This follows because the per-capita growth function is continuous and strictly increasing in $s_H$. The policy identity becomes the integral of the difference in net-growth functions, including extra mortality; its main-model expression cannot be reused unchanged. The ideal upper recovery envelope still holds since extra mortality is nonnegative.
+
+For each setting we scan starts from 0 to $\min(T,125)$ in five-year steps, then refine every observed success/failure transition with half-year steps. All 621 distinct runs completed with finite endpoint metrics. This design finds all observed transitions without assuming policy monotonicity, but may miss isolated success islands between coarse samples. The sampled success sets were contiguous and the reported boundaries were not right-censored by the scan limit.
+
+\begin{table}[htbp]\centering\small
+\caption{Post-review eight-setting sensitivity. Last sampled successes and their differences, in years; next sampled failures are 0.5 years later in every row.}\label{tab:reviewsensitivity}
+\begin{tabular}{@{}llrrr@{}}\toprule
+Setting & Policy & Prevention & Recovery & Gap\\\midrule
+Base pressure & R & 42.5 & 57.0 & 14.5\\
+Base pressure & C & 42.5 & 65.5 & 23.0\\
+$\Hext=5\times10^7$ & R & 48.5 & 61.5 & 13.0\\
+$\Hext=5\times10^7$ & C & 48.5 & 69.0 & 20.5\\
+$\Hext=1.5\times10^8$ & R & 39.0 & 54.5 & 15.5\\
+$\Hext=1.5\times10^8$ & C & 39.0 & 63.5 & 24.5\\
+$T=50$ & R & 42.5 & 44.5 & 2.0\\
+$T=50$ & C & 42.5 & 45.5 & 3.0\\
+$T=150$ & R & 42.5 & 69.5 & 27.0\\
+$T=150$ & C & 42.5 & 86.0 & 43.5\\
+$\kappa=0.02$ & R & 38.5 & 52.5 & 14.0\\
+$\kappa=0.02$ & C & 38.5 & 61.0 & 22.5\\
+$\kappa=0.06$ & R & 33.0 & 45.5 & 12.5\\
+$\kappa=0.06$ & C & 33.0 & 53.5 & 20.5\\
+$\kappa=0.12$ & R & 28.5 & 38.5 & 10.0\\
+$\kappa=0.12$ & C & 28.0 & 46.5 & 18.5\\
+\bottomrule\end{tabular}
+\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize R uses $\bar u=0.8$ and C uses $C/A_{\max}=0.1$. The baseline here has half-year refinement, unlike the quarter-year values in Table~\ref{tab:deadlines}. These are fixed-setting scans, not iid probability draws.\end{minipage}
+\end{table}
+
+Recovery windows persist in the eight tested settings, but their scale changes. With $T=50$, the windows are only 2 and 3 years for R and C. With $T=150$, they become 27 and 43.5 years. Increasing deprivation mortality to 0.12 moves the last preventive starts to 28.5 and 28 years, versus 42.5 under the half-year baseline grid. The result is therefore a conditional recovery opportunity, not an intrinsic, horizon-independent Point of No Return.
+
+An additional 25-trajectory check makes 175 assessments across population floors $1.5,2,4\times10^8$, adequacy thresholds 0.6/0.8/0.9, rapid-loss windows 5/10/20 years, rapid-loss proportions 0.3/0.5/0.7 and cumulative-loss proportions 0.8/0.9/0.95. It is not a full Cartesian factorial. Changing $s_{\min}$ from 0.8 to 0.6 reclassifies the early R/C paths as non-marginal without changing those paths. A year-50 R recovery can still fail the $4\times10^8$ population floor or the 0.9 adequacy threshold. Rapid and cumulative convention changes do not alter the priority label of these representative first-passage paths; this is not evidence that the conventions are generally irrelevant.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.93\linewidth]{review_sensitivity_windows.png}
+\caption{Last sampled preventive and recovery starts across the additional eight settings. Horizontal segments visualize the recovery opportunity beyond prevention. Endpoints have 0.5-year sampling resolution; they are not exact continuous thresholds.}\label{fig:sensitivity}
+\end{figure}
+
+\subsection{Scenario frequencies and structural alternatives}
+A separate exploratory eight-vector ensemble changes only $\eta,\xi,\omega,q_c,M_{\max},c_A,w_{A0},e_0$, using the disclosed stress-augmented ranges in Appendix~\ref{app:ranges}. Human, supply, threshold and initial fields are fixed at the revised pressure background. Seven policies are paired on every vector. Four of eight untreated runs cross; none of the early R/C runs crosses; four of eight year-50 runs cross and recover. The untreated mean final population is $2.13\times10^9$, versus $1.20\times10^{10}$ for early R and $1.36\times10^{10}$ for early C. The 4/8 first-passage fraction has an approximate 95\% Wilson interval 0.22--0.78 under the sampling convention, illustrating how little distributional precision eight draws provide. These stored results were not all rerun in the event audit and are supporting pilot evidence, not precise timing estimates.
+
+\begin{table}[htbp]\centering\small
+\caption{Conditional frequencies in the eight-vector pressure pilot. Recovered paths retain their first-passage label, so the recovery column is not a fourth exclusive fate.}\label{tab:pilotprob}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Policy & First passage & Marginal & Non-marginal & Recovered\\\midrule
+None & 0.500 & 0.500 & 0.000 & 0.000\\
+R, $\tau=0$ & 0.000 & 1.000 & 0.000 & 0.000\\
+R, $\tau=25$ & 0.000 & 1.000 & 0.000 & 0.000\\
+R, $\tau=50$ & 0.500 & 0.375 & 0.125 & 0.500\\
+C, $\tau=0$ & 0.000 & 1.000 & 0.000 & 0.000\\
+C, $\tau=25$ & 0.000 & 1.000 & 0.000 & 0.000\\
+C, $\tau=50$ & 0.500 & 0.500 & 0.000 & 0.500\\
+\bottomrule\end{tabular}
+\end{table}
+
+Earlier structural experiments crossed proportional allocation with an AI-first priority rule and saturated with nonsaturated capability growth. Both allocation rules preserve the same resource constraints and human floor. In each parameter library, 20 vectors, four structures and six alignments give 480 runs. In the broad library, every tested case satisfies the population floor at $a\ge0.2$, but no alignment makes all cases non-marginal. In the later narrow stress library, the corresponding population result first occurs at 0.6; again no all-non-marginal alignment is found. These are finite-library intersections, not continuous robust kernels. The later range was selected after exploratory inspection and must not be pooled with the broad range as a common prior.
+
+\subsection{Numerical verification and scope}\label{sec:verification}
+The current RSI solver is adaptive DOP853, generally with relative/absolute tolerances $10^{-8}/10^{-10}$ and maximum step 0.25 years; the new broad timing scan uses maximum step 0.5. Output times include the horizon and final-window start. First passage is localized by a solver event; its continuous time is passed to the risk module rather than being recomputed from output samples. The untreated pressure crossing is approximately 42.795580 years, compared with the formerly reported first sampled time 43.0. Final-window adequacy is integrated over threshold-event intervals, also split at policy activation. Rapid-window diagnostics still use sampled starts and interpolation.
+
+For the eight cases bracketing the original R/C prevention/recovery boundaries, tightening tolerances to $10^{-10}/10^{-12}$, maximum step to 0.1 and output step to 0.1 preserves every prevention/recovery classification. The maximum relative difference in final population is approximately $1.18\times10^{-5}$. Sampled minima can differ more because a narrow minimum lies between output times; they are not advertised as exact continuous extrema.
+
+Earlier checks compared 26 targeted cases with a tighter adaptive reference; all adaptive comparisons passed their configured criteria. Old fixed RK4 outputs passed only 5/26, 8/26 and 23/26 at one-, half- and quarter-year steps, while all 104 outcome comparisons agreed. A further 36 checks reused 12 stratified parameter vectors across three alignments and found no failure or class change. These checks are selective: a full-library recomputation of 4,400 earlier runs was interrupted and is not claimed complete. The present implementation has 84 passing tests, including physical constraints, extreme scales, events between output points and the modified mortality certificate.
+
+\section{Discussion and model evaluation}\label{sec:discussion}
+\subsection{What the mathematical structure contributes}
+The allocation layer makes scarcity explicit, allows closed-form checks and identifies active bottlenecks. The dynamical layer separates installed stock from capability and preserves physical state constraints. The comparison bounds screen out impossible scenario outcomes before simulation. The protection certificate provides a sufficient population condition; the ideal recovery envelope gives a necessary terminal condition. Policy trajectories then show what actual restricted actions achieve between those analytic bounds.
+
+Three distinctions organize the findings: relative competitive advantage versus absolute decline; population safety versus resource adequacy; and prevention versus terminal recovery. The two timing objectives are particularly relevant when a population floor is a policy convention rather than an absorbing biological zero. A claim that a population can recover must retain the assumptions that permit recovery.
+
+\subsection{Limits that affect interpretation}
+Power supply is external, land partition fixed, manufacturing aggregated and hardware units uncalibrated. The model omits age composition, institutions, migration, assimilation, disease and stochastic small-population loss. An actual collapse could destroy the capacity to enforce R or C or maintain electricity; our continued positive ODE does not represent that absorbing loss. The deprivation extension changes vital rates but retains these other assumptions. A recovery window could shrink or disappear in a system with irreversible infrastructure failure.
+
+Human energy represents essential service demand, with an assumed intensity; no welfare function converts all services, population, AI outputs and restrictions to money. The arbitrary hardware unit also affects the interpretation of acquisition weights unless demand and weight are transformed consistently. We therefore report separate physical ledgers and do not infer a globally optimal policy or economic net benefit. The reference scenario shows little human benefit from additional restriction, but it does not value all possible external effects.
+
+Historical compatibility does not resolve identifiability. Scenario sampling measures are chosen rather than estimated from future data. Numerical accuracy checks cover selected cases, and finite grid scans can miss disconnected success regions. These limits restrict the reach of numerical claims without invalidating the conditional identities and inequalities proved under their assumptions.
+
+\subsection{Conditional policy advice and measurement priorities}
+If the objective is to avoid any effective-extinction crossing, track the preventive success set and retain a timing margin for implementation lag. If the objective includes recovery after a crossing, assess terminal population and resource adequacy separately; a later recovery deadline is not permission to accept an earlier catastrophe. Choosing between R and C requires identifying whether the current bottleneck is allocation, energy, existing stock, land or manufacturing.
+
+For a present-day application, the same allocation layer could compare data-centre expansion with essential community energy and land services. Such use requires local service requirements, grid capacity, facility stock and construction data; the hypothetical RSI parameters should not be imported as measurements.
+
+A decision-relevant measurement target is the human deprivation response: how rapidly prolonged service shortfall changes net population growth or mortality. The structural checks show that leaving this channel out can materially delay modeled intervention deadlines. For a directly observable present-day application, operational electricity per delivered computing service and usable local supply are concrete complementary targets. We have not computed a formal value of information or proved a unique most valuable measurement; ENOCH's priority below is a conditional recommendation grounded in the tested mechanism.
+
+\section{Conclusions}\label{sec:conclusions}
+We developed a common resource-allocation mechanism coupled to historical population competition and physically constrained hypothetical RSI dynamics. The model admits closed-form allocation checks, a forward-invariant physical domain, population comparison bounds and a sufficient resource-protection certificate. These results make the mathematical assumptions behind a safety claim explicit.
+
+The tested policies have different deadlines for preventing a first threshold crossing and attaining terminal recovery. Their finite-grid gaps persist across the tested settings but depend strongly on the observation horizon, demographic response and threshold conventions. A necessary ideal recovery envelope bounds what any allocation-only intervention can achieve by the horizon, without establishing that its ideal path is feasible.
+
+Finally, population recovery is not equivalent to resource adequacy. Fixed supplies can support a larger population at a satisfaction level below the chosen welfare standard. The appropriate conclusion for ENOCH is therefore conditional: preserve resources early, distinguish prevention from recovery, and evaluate per-capita adequacy alongside population and physical restriction costs.
+
+\FloatBarrier
+\clearpage
+\section*{Letter to ENOCH}
+\addcontentsline{toc}{section}{Letter to ENOCH}
+\noindent Dear Members of the ENOCH Board,
+
+Our model asks what would happen if recursively self-improving AI systems shared limited energy and land with humans. It does not predict whether such systems will exist. We find that human population, access to essential resources and the timing of intervention must be considered together.
+
+Two actions were examined in detail: protecting a minimum human share of usable resources and limiting new AI hardware installation. In the pressure scenario, both can prevent a population-floor crossing when started early. However, the last start that prevents every crossing is earlier than the last start that permits population recovery by the end of the study. For the stated 100-year background, the tested gaps are about 14.5 years for resource protection and 23.25 years for the installation cap. These are conditional sampled results, not real-world deadlines.
+
+A larger recovered population is not necessarily better provided for. With fixed supplies, early successful protection can increase population until resources per person again become inadequate. A late policy can also restore population above the effective-extinction floor after a previous crossing. Neither case proves that social institutions, public health or welfare have recovered. Avoiding the initial loss remains a distinct objective.
+
+We have greater confidence in the conditional mathematical bounds than in any numerical year. The resource-protection certificate states assumptions under which a population floor cannot be crossed. Conversely, our recovery envelope identifies starts that are too late even under immediate full resource satisfaction. The numerical windows survived the tested alternatives, but changing the horizon from 50 to 150 years greatly expanded them, and adding deprivation-related mortality moved preventive deadlines earlier. Continued electricity supply and enforceable policies remain strong assumptions.
+
+If one uncertain response could be measured first, we would prioritize the effect of sustained essential-service shortfall on human net population growth, especially additional mortality. This recommendation follows the sensitivity of the tested deadlines; it is not a formal value-of-information optimum. Better measurement would help distinguish genuine intervention time from time supplied by an optimistic demographic assumption.
+
+A present-day use is assessing data-centre expansion against community electricity and land needs. The common allocation mechanism can identify which services bind and how construction competes with operation, after calibration with local data. Our advice is to protect essential access, preserve the ability to act before large losses occur, and monitor adequacy rather than interpreting population persistence alone as success.
+
+\medskip
+Sincerely,\\
+Team \TeamNumber
+
+\clearpage
+\begin{thebibliography}{9}
+\addcontentsline{toc}{section}{References}
+\bibitem{problem} EuroMCM. \emph{2026 Problem $\alpha$: Our Turn}. Competition problem statement supplied with the task, 2026.
+\bibitem{kelly} F. P. Kelly. Charging and rate control for elastic traffic. \emph{European Transactions on Telecommunications}, 8:33--37, 1997. Corrected author version: \url{https://www.statslab.cam.ac.uk/~fpk1/elastic.html}.
+\bibitem{aubin} J.-P. Aubin, A. M. Bayen and P. Saint-Pierre. \emph{Viability Theory: New Directions}, 2nd ed. Springer, 2011. \url{https://doi.org/10.1007/978-3-642-16684-6}.
+\bibitem{aghion} P. Aghion, B. F. Jones and C. I. Jones. \emph{Artificial Intelligence and Economic Growth}. NBER Working Paper 23928, 2017. \url{https://doi.org/10.3386/w23928}.
+\bibitem{chen} Z. Chen, Y. Yang, J. Zhou, Q. Zhang, C.-T. Lin and Y. Duan. \emph{Survival Games: Human-LLM Strategic Showdowns under Severe Resource Scarcity}. arXiv:2505.17937, 2025. \url{https://arxiv.org/abs/2505.17937}.
+\bibitem{higham} T. Higham et al. The timing and spatiotemporal patterning of Neanderthal disappearance. \emph{Nature}, 512:306--309, 2014. \url{https://doi.org/10.1038/nature13621}.
+\bibitem{djakovic} I. Djakovic, A. Key and M. Soressi. Optimal linear estimation models predict 1400--2900 years of overlap between Homo sapiens and Neandertals prior to their disappearance from France and northern Spain. \emph{Scientific Reports}, 2022. \url{https://doi.org/10.1038/s41598-022-19162-z}.
+\bibitem{iea} International Energy Agency. \emph{Energy and AI}. Paris, 2025. \url{https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai}.
+\end{thebibliography}
+
+\appendix
+\section{Disclosed parameter ranges for scenario draws}\label{app:ranges}
+The controlled pilot varies the eight RSI parameters below, keeping other fields fixed. $\mathrm{U}$ denotes uniform and $\mathrm{L}$ log-uniform sampling. The later pressure-policy pilot uses the last column, with seed 2027 and eight vectors; the earlier fixed-background pilot uses the first three columns, with seed 20261017 and 32 vectors per range. These ranges are exploratory supports, not measured distributions. They are not the five-year timing grid of Section~\ref{sec:sensitivity}, which changes one fixed setting at a time.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Exploratory supports for the eight varying RSI parameters. Units are those of the model definitions.}\label{tab:ranges}
+\begin{tabular}{@{}lllll@{}}\toprule
+Parameter & Conservative & Central & Aggressive & Later stress\\\midrule
+$\eta$ & $0.02$--$0.1$ (L) & $0.05$--$0.3$ (L) & $0.1$--$1$ (L) & $0.3$--$1$ (L)\\
+$\xi$ & $0$--$0.3$ (U) & $0$--$0.5$ (U) & $0$--$0.5$ (U) & $0$--$0.1$ (U)\\
+$\omega$ & $0$--$0.3$ (U) & $0$--$0.8$ (U) & $0.3$--$1.5$ (U) & $0.8$--$1.2$ (U)\\
+$q_c$ & $8$--$20$ (L) & $5$--$15$ (L) & $3$--$10$ (L) & $3$--$8$ (L)\\
+$M_{\max}$ & $1\!\times\!10^{4}$--$1\!\times\!10^{5}$ (L) & $1\!\times\!10^{4}$--$5\!\times\!10^{5}$ (L) & $1\!\times\!10^{5}$--$1\!\times\!10^{6}$ (L) & $5\!\times\!10^{5}$--$1\!\times\!10^{6}$ (L)\\
+$c_A$ & $0.1$--$0.5$ (L) & $0.1$--$0.8$ (L) & $0.3$--$1$ (L) & $0.7$--$1$ (L)\\
+$w_{A0}$ & $1$--$10$ (L) & $1$--$100$ (L) & $10$--$1\!\times\!10^{4}$ (L) & $3\!\times\!10^{3}$--$1\!\times\!10^{4}$ (L)\\
+$e_0$ & $1\!\times\!10^{3}$--$5\!\times\!10^{3}$ (L) & $2\!\times\!10^{3}$--$1\!\times\!10^{4}$ (L) & $5\!\times\!10^{3}$--$2\!\times\!10^{4}$ (L) & $8\!\times\!10^{3}$--$2\!\times\!10^{4}$ (L)\\
+\bottomrule\end{tabular}
+
+\end{table}
+
+\section{A stronger welfare condition and a timing limitation}
+The population certificate only uses boundary states $H=\Hmin$. If the requirement is resource adequacy for every state reached, the resource bound must hold up to an upper population bound $H_{\rm up}$. Let
+\[
+b_{\rm all}=\min\left\{1,\frac{(1-\rho_{\max})E_{\min}}{e_HH_{\rm up}},
+\frac{L_{{\rm srv},\min}}{\ell_HH_{\rm up}}\right\}.
+\]
+Then the population certificate together with $ab_{\rm all}\ge s_{\min}$ is sufficient for non-marginal welfare throughout the horizon. Under uncertainty, all stated bounds must hold uniformly; a finite sample intersection does not establish this continuous-domain statement.
+
+For a delayed policy, the protection certificate applies only after activation. It needs a safe pre-activation trajectory, which can be conservatively certified by $H_0e^{-\delta_H\tau}\ge\Hmin$ in the main model. The terminal recovery envelope answers a different question: it permits earlier losses and assumes ideal post-activation satisfaction. Thus its impossibility bound cannot replace the preventive certificate, and neither justifies treating a first-passage threshold as irreversible biological extinction.
+
+\clearpage
+\section*{Report on Use of AI Tools}
+\addcontentsline{toc}{section}{Report on Use of AI Tools}
+% The competition statement excludes this report from the 25-page limit.
+% Consolidate all team members' actual tool use before submission.
+\textbf{Scope.} This report records AI assistance visible in the present modeling audit and manuscript-drafting work. The team must consolidate any additional tools used by other members before submitting a final disclosure. No team identities are included in this report.
+
+\textbf{Tool.} OpenAI Codex assistant. The exact deployed model identifier is not independently recorded in this manuscript package and should be taken from the team's account or session record if required.
+
+\textbf{Uses.} The assistant inspected local model code and saved numerical results; proposed and implemented event-based risk-adjudication changes; added a separately labeled deprivation-mortality alternative; generated sensitivity and boundary-check scripts; ran numerical experiments and regression tests; organized mathematical assumptions, propositions and proofs; drafted and revised English exposition, the summary and ENOCH letter; checked selected references using author, publisher, institutional and original-preprint pages; and assembled LaTeX source and figure dependencies.
+
+\textbf{Representative requests.} The work included requests to assess model reasonableness and priorities; complete continuous-event corrections, sensitivity checks and mechanism explanations; identify mathematical contributions and a paper structure; and write local LaTeX source for later upload to Overleaf. The team supplied the EuroMCM reference LaTeX summary template during drafting.
+
+\textbf{Numerical record.} The audit reported 84 passing tests, 621 additional timing-scan solves, eight boundary cases each evaluated at default and tighter settings, 25 trajectories supporting 175 risk-convention assessments, and a rerun of the 50 revised policy-grid cases. Counts describe implemented checks; they are not independent empirical observations or a global proof. Earlier stored results are distinguished from the current checks in the manuscript.
+
+\textbf{Verification and responsibility.} AI-generated equations and prose require team review. Analytic results are accompanied by assumptions and proofs; numerical claims are tied to local outputs. Historical compatibility is not presented as causal validation, and conditional scenario frequencies are not real-world risk probabilities. The submitted document, references, competition compliance and all conclusions remain the team's responsibility.
+
+\textbf{Source preparation.} The assistant assembled local LaTeX and checked source-level references and file dependencies. The manuscript was not compiled or visually validated in this drafting session, at the team's request to handle Overleaf compilation separately.
+\end{document}

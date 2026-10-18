@@ -1,3 +1,5 @@
+> Post-review update (2026-10-18): see `review_followup_zh.md` for continuous-event boundary checks and threshold/horizon/deprivation-mortality sensitivity. The original four-set tables below retain historical sampled crossing-time columns; they are not event-localization precision evidence.
+
 # Part VI — Robustness synthesis and conditional policy recommendations
 
 **Status: completed synthesis. No new population mechanism was introduced.** Part V

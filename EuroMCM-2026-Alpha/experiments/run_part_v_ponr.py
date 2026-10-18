@@ -32,14 +32,14 @@ def scan(policy_name, make_policy, taus, params, thresholds):
         sim = simulate_rsi(params, 0.0, intervention=policy,
                            terminate_on_extinction=False)
         risk = assess_risk(sim.t, sim.H, sim.s_H, params.H0, thresholds,
-                           p_bad=sim.p_bad_final_window)
+                           p_bad=sim.p_bad_final_window, extinction_event_time=sim.extinction_time)
         minH = float(np.min(sim.H))
         finalH = float(sim.H[-1])
         row = {
             "policy": policy_name,
             "tau": float(tau),
             "risk_outcome": risk.outcome,
-            "prevent_success": bool(minH > thresholds.H_ext),
+            "prevent_success": bool(not np.isfinite(sim.extinction_time)),
             "recover_success": bool(finalH > thresholds.H_ext),
             "min_H": minH,
             "final_H": finalH,

@@ -81,12 +81,17 @@ def viability_certificate(
         [params.e_H, params.ell_H],
         params.H_min,
     )
-    threshold = a_safe(params.delta_H, params.beta_H, b)
+    # Solve beta*s - delta - kappa*(1-s/s_d)_+ >= 0.
+    baseline_ratio = params.delta_H / params.beta_H
+    required_s = (baseline_ratio if baseline_ratio >= params.deprivation_threshold
+                  else (params.delta_H + params.deprivation_mortality) /
+                  (params.beta_H + params.deprivation_mortality / params.deprivation_threshold))
+    threshold = required_s / b if b > 0 else float("inf")
     feasible = bool(threshold <= 1.0)
     return ViabilityCertificate(
         b_under=b,
         a_safe=threshold,
-        r_human=params.delta_H / params.beta_H if params.beta_H > 0 else float("inf"),
+        r_human=required_s,
         energy_floor=energy_floor,
         land_floor=land_floor,
         feasible=feasible,

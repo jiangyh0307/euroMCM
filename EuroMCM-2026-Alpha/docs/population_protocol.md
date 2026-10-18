@@ -1,3 +1,5 @@
+> Post-review structural alternative: `deprivation_mortality=0` preserves this reference law. An explicitly separate shortfall-mortality family, modified safety certificate and sensitivity results are documented in `review_followup_zh.md`. The reference lower bound with baseline mortality alone must not be applied unchanged when that coefficient is positive.
+
 # Population protocol & Part V decision record (P0 handoff)
 
 **Decision:** keep the P0 human equation unchanged for the reference model. Do not increase mortality to manufacture an extinction result. The present model lets resources suppress births/effective growth but does **not** make mortality rise under deprivation. Extinction and resource-defined marginalization must therefore be reported separately.

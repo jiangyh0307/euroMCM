@@ -1,3 +1,5 @@
+> Continuous-event update (2026-10-18): the 25+25 risk grid has been rerun. The untreated crossing is about 42.79558 years (the former 43.0 was sampled). Updated boundary, sensitivity and mechanism checks: `review_followup_zh.md`. Older PONR/shutdown/UQ stored tables retain their original sampled-time columns unless explicitly rerun.
+
 # Part V risk-revised results
 
 **Status: implemented and executed. The population ODE is unchanged; only the risk
@@ -99,7 +101,7 @@ non-marginal human outcome.
 
 ### Pressure background
 
-No intervention reaches effective extinction at **43.0 years** (`H_ext=1e8`), with
+No intervention reaches effective extinction at **42.79558 years** (`H_ext=1e8`), with
 final H about `1.17e5` at the 100-year horizon. The paired no-AI counterfactual is
 **marginal but not extinct**: H grows to about `1.67e10`, final `s_H≈0.6015`. Thus
 RSI changes the survival outcome in this background, but the background itself is
@@ -198,7 +200,7 @@ The window is real in the model in the following sense: after the last sampled
 preventive start, the no-crossing goal is no longer achieved by the tested policy,
 but a later start can still return the final population above `H_ext`. For example,
 R `tau=50` starts after the no-intervention crossing at year 43, then recovers to
-about `2.33e9` by year 100, flagged `recovered_after_extinction=True`. This is not
+about `3.16e8` by year 100, flagged `recovered_after_extinction=True`. This is not
 a claim that social or institutional recovery occurred, nor that a later shock
 cannot cause another collapse.
 

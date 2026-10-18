@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+
+\usepackage{iftex}
+\ifdefined\synctex
+  \synctex=0
+\fi
+\ifPDFTeX
+  \pdfinfoomitdate=1
+  \pdfsuppressptexinfo=-1
+  \pdftrailerid{}
+  \pdfinfo{/Creator () /Producer ()}
+\fi
+\ifLuaTeX
+  \pdfvariable suppressoptionalinfo 1023\relax
+\fi
+\ifXeTeX
+  \AtBeginDocument{
+    \special{pdf:docinfo <<
+      /Author () /Title () /Subject () /Keywords ()
+      /Creator () /Producer ( ) /CreationDate (D:19700101000000Z) /ModDate ()
+    >>}
+    \special{pdf:trailerid [
+      <00000000000000000000000000000000>
+      <00000000000000000000000000000000>
+    ]}
+  }
+\fi
+
+\usepackage{geometry}
+\geometry{
+    left=1in,
+    right=0.75in,
+    top=1in,
+    bottom=1in
+}
+
+\newcommand{\Problem}{$\alpha/\gamma/\lambda$}
+\newcommand{\Team}{000000000}
+
+\usepackage{newtxtext}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{newtxmath}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\definecolor{EuroBlue}{HTML}{183399}
+
+\usepackage{fancyhdr}
+\lhead{Team \Team}
+\rhead{}
+\cfoot{}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+
+\begin{document}
+
+\graphicspath{{.}}
+\DeclareGraphicsExtensions{.pdf,.jpg,.tif,.png}
+
+\thispagestyle{empty}
+\vspace*{-16ex}
+
+\centerline{
+\begin{tabular}{*3{c}}
+    \parbox[t]{0.3\linewidth}{
+        \begin{center}
+            \textbf{Problem Chosen}\\
+            \Large \textcolor{EuroBlue}{\Problem}
+        \end{center}
+    }
+    &
+    \parbox[t]{0.3\linewidth}{
+        \begin{center}
+            \textbf{2026\\ EuroMCM\\ Summary Sheet}
+        \end{center}
+    }
+    &
+    \parbox[t]{0.3\linewidth}{
+        \begin{center}
+            \textbf{Team Control Number}\\
+            \Large \textcolor{EuroBlue}{\Team}
+        \end{center}
+    }
+    \\
+    \hline
+\end{tabular}
+}
+
+\begin{center}
+\color{EuroBlue}
+
+Use this template to prepare the first page (summary page) of your report. Your report must be written in English, use a legible font of at least 12 points, and be submitted as a PDF file.
+
+\vspace{2ex}
+
+Do not include your institution's name, advisor's name, or team members' names anywhere in the report. Before submitting, ensure that you have entered the correct control number and selected problem at the top of the page. You may remove these instructions when preparing your report.
+
+\end{center}
+
+\clearpage
+\pagestyle{fancy}
+\setcounter{page}{1}
+\rhead{Page \thepage\ }
+
+Begin your paper here.
+
+\end{document}

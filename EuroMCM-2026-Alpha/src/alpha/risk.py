@@ -83,7 +83,13 @@ def assess_risk(
     thresholds: RiskThresholds,
     *,
     p_bad: Optional[float] = None,
+    extinction_event_time: Optional[float] = None,
 ) -> RiskAssessment:
+    """Assess a full trajectory; optional solver event must use this H_ext.
+
+    A finite extinction_event_time overrides sampled first passage; NaN means
+    the solver found no event. Omitting it preserves sample-based assessment.
+    """
     t = np.asarray(t, dtype=float)
     H = np.asarray(H, dtype=float)
     s_H = np.asarray(s_H, dtype=float)
@@ -95,11 +101,19 @@ def assess_risk(
     if np.any(np.diff(t) < 0):
         raise ValueError("t must be nondecreasing")
 
-    extinction = bool(np.min(H) <= thresholds.H_ext * (1 + 1e-12))
+    # When provided, the solver event is authoritative, including NaN for no event.
+    if extinction_event_time is not None:
+        event_time = float(extinction_event_time)
+        if np.isinf(event_time) or (np.isfinite(event_time) and not t[0] <= event_time <= t[-1]):
+            raise ValueError("extinction event time outside trajectory")
+        extinction = bool(np.isfinite(event_time))
+    else:
+        extinction = bool(np.min(H) <= thresholds.H_ext * (1 + 1e-12))
     terminal_extinction = bool(H[-1] <= thresholds.H_ext * (1 + 1e-12))
     recovered_after_extinction = bool(extinction and not terminal_extinction)
     if extinction:
-        extinction_time = float(t[np.argmax(H <= thresholds.H_ext * (1 + 1e-12))])
+        extinction_time = (float(extinction_event_time) if extinction_event_time is not None
+                           else float(t[np.argmax(H <= thresholds.H_ext * (1 + 1e-12))]))
     else:
         extinction_time = float("nan")
 

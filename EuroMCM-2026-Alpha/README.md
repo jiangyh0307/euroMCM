@@ -1,9 +1,19 @@
+<!-- Latest review: docs/review_followup_zh.md (2026-10-18). -->
 # EuroMCM 2026 α — Our Turn
+
+## Current manuscript and consolidated workspace
+
+**Start here:** [项目总入口（中文）](START_HERE_zh.md).
+The complete English first draft is [paper/main.tex](paper/main.tex); the
+self-contained upload package is [paper/EuroMCM_Overleaf.zip](paper/EuroMCM_Overleaf.zip).
+Edit the canonical manuscript and run `python3 paper/build_overleaf.py` to refresh
+its export. Templates, source-provenance notes and all review outputs are now local
+to this project. Compilation, visual pagination and final submission review remain pending.
 
 ## Overview
 
-**Parts I–VI theory modeling is complete; the remaining work is paper integration and
-competition attachments.** The project asks:
+**Parts I–VI modeling and an integrated English first draft are complete; the remaining
+work is manuscript review, Overleaf compilation/pagination and submission finalization.** The project asks:
 
 > Under what resource-allocation, physical and dynamical conditions can humanity
 > avoid extinction and marginalization alongside hypothetical recursive
@@ -108,7 +118,7 @@ export PYTHONPATH=src
 python3 -m pytest -q tests
 ```
 
-Current result: **77 passed** (58 P0 + 11 Part V policy/shutdown + 8 risk).
+Current result: **84 passed** (77 existing + 7 review regressions).
 
 **Full selected pipeline** (historical/RSI/alignment/UQ are not all rerun; the
 script runs the P0 acceptance checks plus Parts V–VI):
@@ -146,7 +156,7 @@ equality tolerance is `1e-10`.
 |---|---|---|
 |Historical baseline|`T_rep≈2867 yr`; 14/650 European-compatible|`results/figures/fig1...`, `fig2...`; `docs/results.md`|
 |RSI scenarios|low/moderate non-marginal; rapid/stress marginal or extinct|`results/figures/fig3...`, `fig4...`; `docs/results.md`|
-|Risk-revised Part V|reference all non-marginal; pressure extinction at 43 yr; recovery cases|`docs/part_v_risk_results.md`; `part_v_risk_*`|
+|Risk-revised Part V|reference all non-marginal; pressure crossing at about 42.796 yr; recovery cases|`docs/part_v_risk_results.md`; `part_v_risk_*`|
 |Critical times|R 42.75/57.25; C 42.50/65.75 in base pressure|`part_v_ponr_summary.csv`; `part_v_ponr_*`|
 |Shutdown|success/failure branch grid, assumed `p_s`|`part_v_shutdown_*`|
 |Small UQ pilot|8 RSI vectors, 7 policies|`part_v_uncertainty_*`|
@@ -168,8 +178,9 @@ The cost columns are physical proxies only.
   power-plant operation.
 - Facility land is a fixed precommitted partition. Shutdown reduces operating
   availability but does not release installed stock or site land.
-- Risk thresholds and critical times are policy conventions. Sensitivity to
-  `H_ext,H_min,Delta,q,q_total` is still required before final paper claims.
+- Risk thresholds and critical times are policy conventions. Post-review threshold,
+  horizon and deprivation-mortality checks are complete over a finite disclosed design;
+  see `docs/review_followup_zh.md`. They are not empirical calibration.
 - Numerical verification is selective: 26 targeted cases, 36 stratified checks and
   an interrupted full-library recheck. Some old coarse RK4 trajectories fail current
   precision checks; old results are retained as exploratory.
@@ -190,9 +201,10 @@ The cost columns are physical proxies only.
 `docs/part_v_results.md` (`H_ext=1e6`), `docs/archive/`, `paper/archive/`.
 
 **Next priorities:**
-1. Check the core mathematical conclusions and explain the mechanisms behind
-   the longer C recovery window and the potential welfare cost of strong R.
-2. Integrate Parts I–VI into the final paper, with consistent risk definitions.
+1. Core boundary checks, threshold/horizon/deprivation-mortality sensitivity and
+   policy mechanisms are now documented in `docs/review_followup_zh.md`.
+   Eight tested settings retain a recovery window; deadlines depend on these assumptions.
+2. Review the integrated first draft in `paper/main.tex`, with consistent risk definitions.
 3. Verify references, compile the LaTeX draft, and prepare the Summary Sheet,
    ENOCH Letter and AI-use report.
 
