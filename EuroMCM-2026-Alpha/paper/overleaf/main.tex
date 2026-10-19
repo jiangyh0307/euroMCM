@@ -855,11 +855,29 @@ ENOCH should assess three outcomes separately: whether population ever crosses t
 
 The two policies act through different mechanisms. Resource protection directly supports human access; an installation cap releases operating resources as existing hardware retires. This helps explain the longer recovery window under the cap in our tested cases, but does not establish that it is always preferable. Policy choice should account for enforcement and the time needed for resource relief to reach people.
 
-If one uncertain response could be measured first, we would prioritize how sustained shortages of essential services affect human net population growth, especially mortality. Additional deprivation-related mortality brought preventive deadlines forward in our tests. Longer study horizons, by contrast, allowed more time for recovery. The mathematical bounds are conditional guarantees; the numerical years depend on demographic assumptions, continued electricity supply and effective enforcement.
+If one uncertain response could be measured first, we would prioritize how sustained shortages of essential services affect human net population growth, especially mortality. Additional deprivation-related mortality brought preventive deadlines forward in our tests. Longer study horizons, by contrast, allowed more time for recovery. 
 
-A present-day application is the assessment of data-centre expansion alongside community electricity and land needs. With local calibration, the allocation framework could identify binding resource constraints and distinguish construction demand from continuing operation. We advise ENOCH to protect essential access early, monitor resource adequacy alongside population, and preserve the capacity to intervene. The possibility of later recovery should not become a reason to postpone prevention.
+We recommend the following actions:
+
+\begin{enumerate}
+\item Set and publicly report a minimum share of essential electricity and land
+services reserved for people before expanding AI facilities.
+\item Require operators to report installed hardware, construction energy,
+operating energy and local grid capacity.
+\item Prepare a new-installation cap and a tested shutdown procedure, with clear
+activation conditions and responsible authorities.
+\item Measure how sustained shortages affect mortality, fertility and public-health
+capacity. This is the most valuable near-term input for improving intervention
+timing.
+\end{enumerate}
+
+These steps can begin now through local data collection, stress tests for grid
+and facility expansion, and exercises that verify whether resource protections
+can actually be enforced. 
+A present-day application is the assessment of data-centre expansion alongside community electricity and land needs. We advise ENOCH to protect essential access early, monitor resource adequacy alongside population, and preserve the capacity to intervene.
 
 \medskip
+
 Sincerely,\\
 Team \TeamNumber
 
@@ -911,17 +929,19 @@ $e_0$ & $1\!\times\!10^{3}$--$5\!\times\!10^{3}$ (L) & $2\!\times\!10^{3}$--$1\!
 \addcontentsline{toc}{section}{Report on Use of AI Tools}
 % The competition statement excludes this report from the 25-page limit.
 % Consolidate all team members' actual tool use before submission.
-\textbf{Scope.} This report records AI assistance visible in the present modeling audit and manuscript-drafting work. The team must consolidate any additional tools used by other members before submitting a final disclosure. No team identities are included in this report.
+\textbf{Scope.} This report records the AI assistance used by the team during model development, modeling audit, and manuscript preparation. 
 
-\textbf{Tool.} OpenAI Codex assistant. The exact deployed model identifier is not independently recorded in this manuscript package and should be taken from the team's account or session record if required.
+\textbf{Tool.} OpenAI Codex assistant. OpenAI ChatGPT (October 19, 2026 version, GPT-6-Astra).
 
 \textbf{Uses.} The assistant inspected local model code and saved numerical results; proposed and implemented event-based risk-adjudication changes; added a separately labeled deprivation-mortality alternative; generated sensitivity and boundary-check scripts; ran numerical experiments and regression tests; organized mathematical assumptions, propositions and proofs; drafted and revised English exposition, the summary and ENOCH letter; checked selected references using author, publisher, institutional and original-preprint pages; and assembled LaTeX source and figure dependencies.
 
-\textbf{Representative requests.} The work included requests to assess model reasonableness and priorities; complete continuous-event corrections, sensitivity checks and mechanism explanations; identify mathematical contributions and a paper structure; and write local LaTeX source for later upload to Overleaf. The team supplied the EuroMCM reference LaTeX summary template during drafting.
 
-\textbf{Numerical record.} The audit reported 84 passing tests, 621 additional timing-scan solves, eight boundary cases each evaluated at default and tighter settings, 25 trajectories supporting 175 risk-convention assessments, and a rerun of the 50 revised policy-grid cases. Counts describe implemented checks; they are not independent empirical observations or a global proof. Earlier stored results are distinguished from the current checks in the manuscript.
+\textbf{Numerical record.} The audit reported 84 passing tests, 621 additional timing-scan solves, eight boundary cases each evaluated at default and tighter settings, 25 trajectories supporting 175 risk-convention assessments, and a rerun of the 50 revised policy-grid cases. Counts describe implemented checks; they are not independent empirical observations or a global proof. The team supplied the problem statement, source papers, code and numerical
+outputs. The team reviewed the equations,
+parameters, references, code changes and reported results, and checked numerical
+claims against saved outputs or local reruns.
 
-\textbf{Verification and responsibility.} AI-generated equations and prose require team review. Analytic results are accompanied by assumptions and proofs; numerical claims are tied to local outputs. Historical compatibility is not presented as causal validation, and conditional scenario frequencies are not real-world risk probabilities. The submitted document, references, competition compliance and all conclusions remain the team's responsibility.
+\textbf{Verification and responsibility.} AI-generated equations and prose r have been reviewed by team. Analytic results are accompanied by assumptions and proofs; numerical claims are tied to local outputs. Historical compatibility is not presented as causal validation, and conditional scenario frequencies are not real-world risk probabilities. The submitted document, references, competition compliance and all conclusions remain the team's responsibility.
 
-\textbf{Source preparation.} The assistant assembled local LaTeX and checked source-level references and file dependencies. The manuscript was not compiled or visually validated in this drafting session, at the team's request to handle Overleaf compilation separately.
+
 \end{document}
